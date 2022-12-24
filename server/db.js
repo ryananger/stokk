@@ -22,4 +22,12 @@ const tickerSchema = new mongoose.Schema({
 const Ticker = new mongoose.model('Ticker', tickerSchema);
 Ticker.createCollection();
 
+tickerSchema.options.toObject = {};
+tickerSchema.options.toObject.transform = function(doc, ret) {
+  delete ret._id;
+  delete ret.__v;
+
+  return ret;
+};
+
 module.exports = Ticker;

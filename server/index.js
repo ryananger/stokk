@@ -14,16 +14,24 @@ app.post('/tickers', function(req, res) {
     .then(function(results) {
       if (results.length === 0) {
         Ticker.insertMany(req.body);
+        res.send({posted: true, message: 'Posted.'});
+      } else {
+        res.send({posted: false, message: 'Already in database.'});
       }
-
-      res.send();
     })
 });
 
 app.get('/tickers/', function(req, res) {
+  console.log(req.query);
   Ticker.find(req.query)
     .then(function(tickers) {
-      res.json(tickers);
+      var sendBody = [];
+
+      tickers.map(function(ticker) {
+        sendBody.push(ticker.toObject());
+      });
+
+      res.json(sendBody);
     })
 });
 

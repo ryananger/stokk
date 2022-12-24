@@ -37,14 +37,24 @@ var ax = {
       results.map(function(result, i) {
         if (i === results.length - 1) {
           axios.post(url, chunk)
-            .then(function() {
+            .then(function(response) {
+              if (!response.data.posted) {
+                console.log(response.data.message);
+                return;
+              }
+
               console.log('Posted ' + i + ' tickers.');
             })
         } else if (chunk.length < 50) {
           chunk.push(result);
         } else {
           axios.post(url, chunk)
-            .then(function() {
+            .then(function(response) {
+              if (!response.data.posted) {
+                console.log(response.data.message);
+                return;
+              }
+
               console.log('Posted chunk.');
             })
 
@@ -54,15 +64,12 @@ var ax = {
     };
   },
 
-  getTicker: function(ticker) {
-    var filter = {
-      ticker: ticker
-    };
-
+  getTickers: function(filter, setData) {
     axios.get(url, {params: filter})
-      .then(function(results) {
-        console.log(results)
-        console.log('test in getTicker')
+      .then(function(response) {
+        console.log(response)
+
+        setData(response.data);
       })
   }
 };
