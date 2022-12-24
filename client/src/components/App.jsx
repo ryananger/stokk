@@ -4,27 +4,39 @@ import axios from 'axios';
 import ax from '../ax.js';
 import helpers from '../helpers.js';
 
-const dateString = document.cookie.slice(5);
+const dateString = helpers.getDateFromCookie();
+
 const startDate = {
   year:  dateString.slice(0, 4),
   month: dateString.slice(5, 7),
   day:   dateString.slice(8)
 };
 
-console.log('Date from cookie: ', startDate);
+console.log('Last date checked: ', startDate);
 
 const App = function() {
-  const [data, addData] = useState([]);
   const [marketDate, setDate] = useState(startDate);
+  const [running, toggle] = useState(false);
+
+  var runButton = function() {
+    toggle(!running);
+  };
+
+  var runStop = function() {
+    return running ? 'Stop' : 'Run';
+  };
 
   useEffect(function() {
-    //ax.polygonDataLoop(marketDate, setDate);
-  }, [marketDate]);
+    if (running) {
+      ax.polygonDataLoop(marketDate, setDate, toggle);
+    }
+  }, [marketDate, running]);
 
   return (
     <div>
       <h1>stokk</h1>
-      {JSON.stringify(data)}
+      <button onClick={runButton}>{runStop()}</button>
+      {}
     </div>
   )
 }

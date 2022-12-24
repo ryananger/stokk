@@ -1,26 +1,26 @@
 import axios from 'axios';
 import helpers from './helpers.js';
 
-var url = 'http://localhost:4001/tickers/';
+var url = `http://localhost:${process.env.PORT}/tickers/`;
 
 var ax = {
-  polygonDataLoop: function(date, setDate) {
+  polygonDataLoop: function(date, setDate, toggle) {
+    var newDate = helpers.newDate(date);
     var dateString = document.cookie.slice(5);
 
-    console.log('GET data for ', dateString);
+    if (!newDate) {
+      console.log('All dates found.');
+      document.cookie = 'date=' + helpers.dateToString(date);
+      toggle(false);
+      return;
+    }
 
     axios.get(helpers.getURL(dateString))
       .then(function(response) {
-        ax.handleData(response.data, dateString);
+        //ax.handleData(response.data, dateString);
 
-        var newDate = helpers.newDate(date);
-
+        console.log('GET data for ', dateString, response.data.resultsCount);
         document.cookie = 'date=' + helpers.dateToString(newDate);
-
-        if (!newDate) {
-          console.log('All dates found.');
-          return;
-        }
 
         setTimeout(function() {
           setDate(newDate);

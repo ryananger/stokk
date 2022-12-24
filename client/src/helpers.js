@@ -1,4 +1,15 @@
 var helpers = {
+  getDateFromCookie: function() {
+    var date;
+
+    if (!document.cookie) {
+      document.cookie = 'date=2021-01-01';
+    }
+
+    date = document.cookie.slice(5);
+
+    return date;
+  },
   getURL: function(date) {
     var urlBase = 'https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/';
     var urlDate = date;
@@ -16,8 +27,7 @@ var helpers = {
 
     switch (date.month) {
       case '13':
-        newDate = false;
-        break;
+        return false;
       case '01':
       case '03':
       case '05':
@@ -71,7 +81,19 @@ var helpers = {
         break;
     }
 
-    console.log('Next date: ', helpers.dateToString(newDate))
+    var today = new Date();
+    var current = {
+      year: today.getFullYear(),
+      month: today.getMonth() + 1,
+      day: today.getDate()
+    };
+
+    if (Number(newDate.year)  === current.year  &&
+        Number(newDate.month) === current.month &&
+        Number(newDate.day)   === current.day) {
+          return false;
+    }
+
     return newDate;
   },
 
