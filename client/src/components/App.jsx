@@ -15,6 +15,7 @@ const startDate = {
 console.log('Last date checked: ', startDate);
 
 const App = function() {
+  const [data, setData] = useState([]);
   const [marketDate, setDate] = useState(startDate);
   const [running, toggle] = useState(false);
 
@@ -26,6 +27,12 @@ const App = function() {
     return running ? 'Stop' : 'Run';
   };
 
+  var searchTicker = function() {
+    var input = document.getElementById('ticker').value;
+
+    ax.getTicker(input);
+  }
+
   useEffect(function() {
     if (running) {
       ax.polygonDataLoop(marketDate, setDate, toggle);
@@ -36,7 +43,12 @@ const App = function() {
     <div>
       <h1>stokk</h1>
       <button onClick={runButton}>{runStop()}</button>
-      {}
+      <br/>
+      <input id='ticker'></input>
+      <button onClick={searchTicker}>Search</button>
+      <br/>
+      <br/>
+      {JSON.stringify(data)}
     </div>
   )
 }

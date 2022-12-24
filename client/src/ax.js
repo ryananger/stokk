@@ -17,7 +17,7 @@ var ax = {
 
     axios.get(helpers.getURL(dateString))
       .then(function(response) {
-        //ax.handleData(response.data, dateString);
+        ax.handleData(response.data, dateString);
 
         console.log('GET data for ', dateString, response.data.resultsCount);
         document.cookie = 'date=' + helpers.dateToString(newDate);
@@ -52,6 +52,18 @@ var ax = {
         }
       })
     };
+  },
+
+  getTicker: function(ticker) {
+    var filter = {
+      ticker: ticker
+    };
+
+    axios.get(url, {params: filter})
+      .then(function(results) {
+        console.log(results)
+        console.log('test in getTicker')
+      })
   }
 };
 

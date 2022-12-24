@@ -10,16 +10,24 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.post('/tickers', function(req, res) {
-  Ticker.insertMany(req.body);
+  Ticker.find({date: req.body[0].date})
+    .then(function(results) {
+      if (results.length === 0) {
+        Ticker.insertMany(req.body);
+      }
 
-  res.send();
+      res.send();
+    })
 });
 
-app.get('/tickers/:ticker', function(req, res) {
-
+app.get('/tickers/', function(req, res) {
+  Ticker.find(req.query)
+    .then(function(tickers) {
+      res.json(tickers);
+    })
 });
 
-const PORT = process.env.PORT;
+const PORT = 4001;
 
 app.listen(PORT);
 console.log(`Server listening at http://localhost:${PORT}`);
