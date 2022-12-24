@@ -65,10 +65,17 @@ var ax = {
   },
 
   getTickers: function(filter, setData) {
+    if (Object.keys(filter).length === 0) {
+      alert('Request must not be empty.');
+      return;
+    }
+
     axios.get(url, {params: filter})
       .then(function(response) {
-        console.log(response)
-
+        if (typeof response.data === 'string') {
+          console.log(response.data);
+          return;
+        }
         setData(response.data);
       })
   }

@@ -49,9 +49,54 @@ const App = function() {
       }
     })
 
-    console.log(filter)
     ax.getTickers(filter, setData);
   };
+
+  var renderData = function() {
+    if (data.length === 0) {
+      return;
+    }
+
+    var rendered = [];
+
+    rendered.push((
+      <div key={-1}>
+        <div className='keys h'>
+          <div className='tableKey'>ticker</div>
+          <div className='tableKey'>date</div>
+          <div className='tableKey'>open</div>
+          <div className='tableKey'>close</div>
+          <div className='tableKey'>high</div>
+          <div className='tableKey'>low</div>
+          <div className='tableKey'>volume</div>
+          <div className='tableKey'>vwap</div>
+        </div>
+        <hr/>
+      </div>
+
+    ));
+
+    var trunc = function(num) {
+      return Math.trunc(num*100)/100;
+    }
+
+    data.map(function(entry, i) {
+      rendered.push((
+        <div key={i} className='entry h'>
+          <div className='entryKey'>{entry.ticker}</div>
+          <div className='entryKey'>{entry.date}</div>
+          <div className='entryKey'>{trunc(entry.open)}</div>
+          <div className='entryKey'>{trunc(entry.close)}</div>
+          <div className='entryKey'>{trunc(entry.high)}</div>
+          <div className='entryKey'>{trunc(entry.low)}</div>
+          <div className='entryKey'>{Math.floor(entry.volume)}</div>
+          <div className='entryKey'>{trunc(entry.vwap)}</div>
+        </div>
+      ));
+    })
+
+    return rendered;
+  }
 
   useEffect(function() {
     if (running) {
@@ -63,9 +108,9 @@ const App = function() {
     <div id='app'>
       <div className='head h'>
         <h1>stokk</h1>
-        <button onClick={runButton}>{runStop()}</button>
+        <input type='submit' id='updateButton' onClick={runButton} value={runStop()}/>
       </div>
-      <form id='searchForm' onSubmit={handleSubmit}>
+      <form id='searchForm' onSubmit={handleSubmit} autoComplete='off'>
         <label>
           Ticker:
           <input type='text' id='ticker'/>
@@ -103,7 +148,10 @@ const App = function() {
 
       <br/>
       <br/>
-      {JSON.stringify(data)}
+
+      <div id='dataRender'>
+        {renderData()}
+      </div>
     </div>
   )
 }

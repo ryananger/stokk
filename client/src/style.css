@@ -1,20 +1,26 @@
-#root {
+html, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  background-color: rgb(54, 48, 59);
+  color: rgb(230, 195, 130);
 }
 
 #app {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 100%;
   min-width: 260px;
+  margin: 12px;
+  margin-top: 0;
+
+  font-family: 'Jost';
 }
 
 .head {
   width: 100%;
-  padding: 32px;
   padding-top: 12px;
   padding-bottom: 12px;
   box-sizing: border-box;
@@ -35,6 +41,7 @@ form {
   width: 20%;
   min-width: 260px;
   margin: 32px;
+  margin-left: 0px;
 }
 
 label {
@@ -44,10 +51,44 @@ label {
 }
 
 input {
-  width: 100px;
+  width: 160px;
   padding: 0px;
+  background-color: rgb(104, 72, 112);
+  color: rgb(230, 195, 130);
+  padding-left: 4px;
+  outline: none;
 }
 
 input[type="submit"] {
   width: 100%;
+  padding: 4px;
+  margin-top: 12px;
+  border: 1px solid black;
+
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#updateButton {
+  width: 120px;
+  margin: 0;
+}
+
+#dataRender {
+  width: 90vw;
+  max-width: 1000px;
+}
+
+.tableKey, .entryKey {
+  width: 10%;
+}
+
+.entry {
+  width: 100%;
+}
+
+hr {
+  margin-left: -1%;
+  width: 102%;
+  border: 1px solid rgb(230, 195, 130);
 }
