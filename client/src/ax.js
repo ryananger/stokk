@@ -1,7 +1,7 @@
 import axios from 'axios';
 import helpers from './helpers.js';
 
-var url = `http://localhost:${process.env.PORT}/tickers/`;
+var urlBase = `http://localhost:${process.env.PORT}/`;
 
 var ax = {
   polygonDataLoop: function(date, setDate, toggle) {
@@ -36,7 +36,7 @@ var ax = {
 
       results.map(function(result, i) {
         if (i === results.length - 1) {
-          axios.post(url, chunk)
+          axios.post(urlBase + 'tickers', chunk)
             .then(function(response) {
               if (!response.data.posted) {
                 console.log(response.data.message);
@@ -48,7 +48,7 @@ var ax = {
         } else if (chunk.length < 50) {
           chunk.push(result);
         } else {
-          axios.post(url, chunk)
+          axios.post(urlBase + 'tickers', chunk)
             .then(function(response) {
               if (!response.data.posted) {
                 console.log(response.data.message);
@@ -74,13 +74,27 @@ var ax = {
       [sortBy]: document.getElementById('order').value
     };
 
-    axios.get(url, {params: {filter, sort}})
+    axios.get(urlBase + 'tickers', {params: {filter, sort}})
       .then(function(response) {
         if (typeof response.data === 'string') {
-          console.log(response.data);
+          alert(response.data);
           return;
         }
+
         setData(response.data);
+      })
+  },
+  getNet: function(set) {
+    axios.get(urlBase + 'net')
+      .then(function(response) {
+        if (typeof response.data === 'string') {
+          alert(response.data);
+          return;
+        }
+
+        var net = response.data;
+
+        set(net);
       })
   }
 };

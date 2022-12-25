@@ -16,6 +16,11 @@ const controller = {
     Ticker.find(filter)
       .sort(sort)
       .then(function(tickers) {
+        if (tickers.length === 0) {
+          res.send('No tickers found.');
+          return;
+        }
+
         var sendBody = [];
 
         tickers.map(function(ticker) {

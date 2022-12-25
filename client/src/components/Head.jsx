@@ -1,19 +1,23 @@
 import React from 'react';
+import Brain from './Brain.jsx';
 import ax from '../ax.js';
 
-const Head = function({toggle, running}) {
+const Head = function({app}) {
   var runButton = function() {
-    toggle(!running);
+    app.toggle(!app.running);
   };
 
   var runStop = function() {
-    return running ? 'Stop Updating' : 'Run Update';
+    return app.running ? 'stop update' : 'update';
   };
 
   return (
     <div className='head h'>
       <h1>stokk</h1>
-      <input type='submit' id='updateButton' onClick={runButton} value={runStop()}/>
+      <div className='navButtons h'>
+        <Brain data={app.data}/>
+        <input type='submit' id='updateButton' onClick={runButton} value={runStop()}/>
+      </div>
     </div>
   )
 }

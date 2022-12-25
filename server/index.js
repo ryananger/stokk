@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const controller = require('./controller.js');
+const readNet = require('./readNet.js');
 const app = express();
 
 app.use(cors());
@@ -13,7 +14,7 @@ app.post('/tickers', function(req, res) {
   controller.postTickers(req, res);
 });
 
-app.get('/tickers/', function(req, res) {
+app.get('/tickers', function(req, res) {
   var query = req.query.filter;
   var sort = req.query.sort;
   var filter = {};
@@ -31,6 +32,10 @@ app.get('/tickers/', function(req, res) {
   }
 
   controller.findTickers(filter, sort, res);
+});
+
+app.get('/net', function(req, res) {
+  readNet(res);
 });
 
 const PORT = 4001;

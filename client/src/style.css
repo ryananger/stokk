@@ -152,8 +152,15 @@ input[type="radio"]:checked {
   height: 100%;
 }
 
-#updateButton {
+#updateButton, .brain {
   width: 120px;
+  height: 100%;
+  margin: 0;
+  margin-left: 12px;
+}
+
+#brainButton {
+  height: 100%;
   margin: 0;
 }
 

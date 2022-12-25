@@ -8,7 +8,6 @@ import Interface from './Interface.jsx';
 import Visual from './Visual.jsx';
 import Head from './Head.jsx';
 
-const dateString = helpers.dateString;
 const labels     = helpers.labels;
 const startDate  = helpers.startDate;
 
@@ -59,7 +58,9 @@ const App = function() {
     })
 
     return rendered;
-  }
+  };
+
+  const app = {data, toggle, running};
 
   useEffect(function() {
     if (running) {
@@ -69,11 +70,12 @@ const App = function() {
 
   return (
     <div id='app'>
-      <Head toggle={toggle} running={running}/>
+      <Head app={app}/>
       <div className='interface h'>
         <Interface setData={setData}/>
         <Visual data={data}/>
       </div>
+
       <div id='dataRender'>
         {renderLabels()}
         {renderData()}

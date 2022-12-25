@@ -126,24 +126,20 @@ var helpers = {
 
     return parsed;
   },
-  onlyHigher: function(data, chg) {
-    var higher = [];
-    var chg = chg || 5;
+  dataConvert: function(data, keys) {
+    var converted = [];
 
-    data.map(function(stock) {
-      if (stock.T.length > 4) {
-        return;
-      }
+    data.map(function(entry) {
+      var entryData = [];
 
-      if (stock.c > stock.o) {
-        var change = Math.floor(((stock.c - stock.o)/stock.o) * 100);
-        if (change > chg) {
-          higher.push({change, stock});
-        }
-      }
-    });
+      keys.map(function(key) {
+        entryData.push(entry[key]);
+      })
 
-    return higher;
+      converted.push(entryData);
+    })
+
+    return converted;
   }
 };
 
