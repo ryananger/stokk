@@ -76,7 +76,7 @@ var ax = {
           console.log(response.data);
           return;
         }
-        setData(response.data);
+        setData({sort: 'date', results: response.data});
       })
   }
 };

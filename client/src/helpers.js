@@ -1,4 +1,11 @@
 var helpers = {
+  trunc: function(num) {
+    if (!num) {
+      return '';
+    }
+
+    return Math.trunc(num*100)/100;
+  },
   getDateFromCookie: function() {
     var date;
 
@@ -139,5 +146,17 @@ var helpers = {
     return higher;
   }
 };
+
+var dateString = helpers.getDateFromCookie();
+
+helpers.dateString = dateString;
+helpers.labels = ['ticker', 'date', 'open', 'close', 'high', 'low', 'volume', 'vwap'];
+helpers.startDate = {
+  year:  dateString.slice(0, 4),
+  month: dateString.slice(5, 7),
+  day:   dateString.slice(8)
+};
+
+console.log('Last date checked: ', helpers.startDate);
 
 export default helpers;
