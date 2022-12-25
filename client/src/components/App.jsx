@@ -13,7 +13,7 @@ const labels     = helpers.labels;
 const startDate  = helpers.startDate;
 
 const App = function() {
-  const [data, setData] = useState({sort: 'date', results: []});
+  const [data, setData] = useState([]);
   const [marketDate, setDate] = useState(startDate);
   const [running, toggle] = useState(false);
 
@@ -37,13 +37,13 @@ const App = function() {
   };
 
   var renderData = function() {
-    if (data.results.length === 0) {
+    if (data.length === 0) {
       return;
     }
 
     var rendered = [];
 
-    data.results.map(function(entry, i) {
+    data.map(function(entry, i) {
       rendered.push((
         <div key={i} className='entry h'>
           <div className='entryKey'>{entry.ticker}</div>

@@ -4,9 +4,8 @@ import ax from '../ax.js';
 const Visual = function({data}) {
 
   return (
-    <div id='visualContainer'>
-
-
+    <div className='visualContainer v'>
+      data visualization will go in here soon...
     </div>
   )
 }

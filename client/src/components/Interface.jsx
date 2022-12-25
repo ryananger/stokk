@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ax from '../ax.js';
 import helpers from '../helpers.js';
 
 const labels = helpers.labels;
 
 const Interface = function({setData}) {
+  const [sort, setSort] = useState('date');
+
   var handleSubmit = function(e) {
     e.preventDefault();
 
@@ -25,49 +27,72 @@ const Interface = function({setData}) {
       }
     })
 
-    ax.getTickers(filter, setData);
+    ax.getTickers(filter, sort, setData);
+  };
+
+  var sortChange = function(e) {
+    setSort(e.target.id.replace('Radio', ''));
+  };
+
+  var renderForm = function() {
+    var rendered = [];
+    var date = [];
+
+    labels.map(function(label) {
+      if (label === 'date') {
+        date.push(
+          <label key='dateLabel'>
+            <div className='formTag'>date:</div>
+            <input type='radio' id='dateRadio' checked={(sort === 'date')} onChange={sortChange}/>
+            <input type='date' id='date'/>
+          </label>
+        )
+        return;
+      }
+
+      rendered.push(
+        <label key={label + 'Label'}>
+          <div className='formTag'>{label}:</div>
+          <input type='radio' id={label + 'Radio'} checked={(sort === label)} onChange={sortChange}/>
+          <input type='text' id={label}/>
+        </label>
+      )
+    });
+
+    rendered.push(date);
+    rendered.push(
+      <label key='order'>
+        <div className='formTag'>order:</div>
+        <select id='order'>
+          <option value={-1}>descending</option>
+          <option value={1}>ascending</option>
+        </select>
+      </label>
+    )
+
+    return rendered;
   };
 
   return (
     <div className='interLeft v'>
-      <div id='searchHead'>
-        This will contain information about querying the stock data.
-
-        More on the way.
+      <div className='searchHead v'>
+        Click the button to sort query by that paramater.
+        <br/><br/>
+        Format comparisons like this:
+        <br/><br/>
+        <label className='dummyLabel'>
+          <div className='formTag'>open:</div>
+          <input type='radio' id='dummy1' checked={0} readOnly/>
+          <input type='text' value='>3, <=4' readOnly/>
+        </label>
+        <label className='dummyLabel'>
+          <div className='formTag'>close:</div>
+          <input type='radio' id='dummy2'checked readOnly/>
+          <input type='text' value='>4' readOnly/>
+        </label>
       </div>
       <form id='searchForm' onSubmit={handleSubmit} autoComplete='off'>
-        <label>
-          <div className='formTag'>Ticker:</div>
-          <input type='text' id='ticker'/>
-        </label>
-        <label>
-          <div className='formTag'>Open:</div>
-          <input type='text' id='open'/>
-        </label>
-        <label>
-          <div className='formTag'>Close:</div>
-          <input type='text' id='close'/>
-        </label>
-        <label>
-          <div className='formTag'>High:</div>
-          <input type='text' id='high'/>
-        </label>
-        <label>
-          <div className='formTag'>Low:</div>
-          <input type='text' id='low'/>
-        </label>
-        <label>
-          <div className='formTag'>Volume:</div>
-          <input type='text' id='volume'/>
-        </label>
-        <label>
-          <div className='formTag'>VWAP:</div>
-          <input type='text' id='vwap'/>
-        </label>
-        <label>
-          <div className='formTag'>Date:</div>
-          <input type='date' id='date'/>
-        </label>
+        {renderForm()}
         <input type='submit' value='Search'/>
       </form>
     </div>

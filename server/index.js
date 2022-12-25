@@ -14,7 +14,23 @@ app.post('/tickers', function(req, res) {
 });
 
 app.get('/tickers/', function(req, res) {
-  controller.findTickers(req, res);
+  var query = req.query.filter;
+  var sort = req.query.sort;
+  var filter = {};
+
+  for (var key in query) {
+    switch (key) {
+      case 'date':
+      case 'ticker':
+        filter[key] = query[key];
+        break;
+      default:
+        filter[key] = controller.numQuery(query[key]);
+        break;
+    }
+  }
+
+  controller.findTickers(filter, sort, res);
 });
 
 const PORT = 4001;

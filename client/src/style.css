@@ -56,11 +56,19 @@ h1 {
   min-width: 240px;
 }
 
-#searchHead {
+.searchHead {
   border: 1px solid rgb(95, 67, 104);
   border-style: none none solid none;
-  height: 200px;
+  height: 160px;
   margin-bottom: 12px;
+  justify-content: flex-end;
+  padding-bottom: 12px;
+}
+
+.dummyLabel {
+  justify-content: flex-end;
+  padding-bottom: 2px;
+  margin: 2px;
 }
 
 form {
@@ -71,20 +79,26 @@ form {
 label {
   margin: 2px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .formTag {
   margin-right: 12px;
 }
 
-input {
+input, select {
+  border: none;
   width: 160px;
   padding: 0px;
   background-color: rgb(104, 72, 112);
   color: rgb(230, 195, 130);
   padding-left: 4px;
   outline: none;
+}
+
+select {
+  width: 164px;
+  margin-left: 16px;
 }
 
 input[type="submit"] {
@@ -103,12 +117,34 @@ input[type="submit"]:active {
   box-shadow: none;
 }
 
-#visualContainer {
+input[type="radio"] {
+  appearance: none;
+
+  width: 12px;
+  height: 12px;
+  border-radius: 12px;
+
+  padding: 0;
+  margin: 0;
+  margin-right: 4px;
+  margin-top: 6px;
+
+  border: none;
+}
+
+input[type="radio"]:checked {
+  border: 3px solid rgb(104, 72, 112);
+  background-color: rgb(230, 195, 130);
+}
+
+.visualContainer {
   border: 1px solid rgb(95, 67, 104);
   width: 75%;
   margin: 32px;
   margin-left: 0;
   margin-right: 0;
+
+  text-align: center;
 }
 
 .plot {

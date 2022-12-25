@@ -64,19 +64,23 @@ var ax = {
     };
   },
 
-  getTickers: function(filter, setData) {
+  getTickers: function(filter, sortBy, setData) {
     if (Object.keys(filter).length === 0) {
       alert('Request must not be empty.');
       return;
     }
 
-    axios.get(url, {params: filter})
+    var sort = {
+      [sortBy]: document.getElementById('order').value
+    };
+
+    axios.get(url, {params: {filter, sort}})
       .then(function(response) {
         if (typeof response.data === 'string') {
           console.log(response.data);
           return;
         }
-        setData({sort: 'date', results: response.data});
+        setData(response.data);
       })
   }
 };
