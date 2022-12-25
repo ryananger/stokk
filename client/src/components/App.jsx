@@ -77,6 +77,10 @@ const App = function() {
     ));
 
     var trunc = function(num) {
+      if (!num) {
+        return '';
+      }
+
       return Math.trunc(num*100)/100;
     }
 
@@ -110,44 +114,54 @@ const App = function() {
         <h1>stokk</h1>
         <input type='submit' id='updateButton' onClick={runButton} value={runStop()}/>
       </div>
-      <form id='searchForm' onSubmit={handleSubmit} autoComplete='off'>
-        <label>
-          Ticker:
-          <input type='text' id='ticker'/>
-        </label>
-        <label>
-          Open:
-          <input type='text' id='open'/>
-        </label>
-        <label>
-          Close:
-          <input type='text' id='close'/>
-        </label>
-        <label>
-          High:
-          <input type='text' id='high'/>
-        </label>
-        <label>
-          Low:
-          <input type='text' id='low'/>
-        </label>
-        <label>
-          Volume:
-          <input type='text' id='volume'/>
-        </label>
-        <label>
-          VWAP:
-          <input type='text' id='vwap'/>
-        </label>
-        <label>
-          Date:
-          <input type='date' id='date'/>
-        </label>
-        <input type='submit' value='Search'/>
-      </form>
+      <div className='interface h'>
+        <div className='interLeft v'>
+          <div id='searchHead'>
+            This will contain information about querying the stock data.
 
-      <br/>
-      <br/>
+            More on the way.
+          </div>
+          <form id='searchForm' onSubmit={handleSubmit} autoComplete='off'>
+            <label>
+              <div className='formTag'>Ticker:</div>
+              <input type='text' id='ticker'/>
+            </label>
+            <label>
+              <div className='formTag'>Open:</div>
+              <input type='text' id='open'/>
+            </label>
+            <label>
+              <div className='formTag'>Close:</div>
+              <input type='text' id='close'/>
+            </label>
+            <label>
+              <div className='formTag'>High:</div>
+              <input type='text' id='high'/>
+            </label>
+            <label>
+              <div className='formTag'>Low:</div>
+              <input type='text' id='low'/>
+            </label>
+            <label>
+              <div className='formTag'>Volume:</div>
+              <input type='text' id='volume'/>
+            </label>
+            <label>
+              <div className='formTag'>VWAP:</div>
+              <input type='text' id='vwap'/>
+            </label>
+            <label>
+              <div className='formTag'>Date:</div>
+              <input type='date' id='date'/>
+            </label>
+            <input type='submit' value='Search'/>
+          </form>
+        </div>
+
+        <div id='visual'>
+
+        </div>
+      </div>
 
       <div id='dataRender'>
         {renderData()}
