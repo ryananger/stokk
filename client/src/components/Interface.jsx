@@ -27,6 +27,8 @@ const Interface = function({setData}) {
       }
     })
 
+    console.log(filter)
+
     ax.getTickers(filter, sort, setData);
   };
 
@@ -39,12 +41,22 @@ const Interface = function({setData}) {
     var date = [];
 
     labels.map(function(label) {
+      if (label === 'dateEnd') {
+        return;
+      }
+
       if (label === 'date') {
         date.push(
-          <label key='dateLabel'>
-            <div className='formTag'>date:</div>
+          <label key='date'>
+            <div className='formTag'>dates:</div>
             <input type='radio' id='dateRadio' checked={(sort === 'date')} onChange={sortChange}/>
             <input type='date' id='date'/>
+          </label>
+        )
+        date.push(
+          <label key='dateEnd'>
+            <div className='formTag'> </div>
+            <input type='date' id='dateEnd'/>
           </label>
         )
         return;
@@ -91,6 +103,7 @@ const Interface = function({setData}) {
           <input type='text' value='>4' readOnly/>
         </label>
       </div>
+
       <form id='searchForm' onSubmit={handleSubmit} autoComplete='off'>
         {renderForm()}
         <input type='submit' value='Search'/>

@@ -20,6 +20,7 @@ const App = function() {
     var rendered = [];
 
     labels.map(function(label) {
+      if (label !== 'dateEnd')
       rendered.push((
         <div key={label} className='tableKey'>{label}</div>
       ))
@@ -60,8 +61,6 @@ const App = function() {
     return rendered;
   };
 
-  const app = {data, toggle, running};
-
   useEffect(function() {
     if (running) {
       ax.polygonDataLoop(marketDate, setDate, toggle);
@@ -70,7 +69,7 @@ const App = function() {
 
   return (
     <div id='app'>
-      <Head app={app}/>
+      <Head data={data} toggle={toggle} running={running}/>
       <div className='interface h'>
         <Interface setData={setData}/>
         <Visual data={data}/>

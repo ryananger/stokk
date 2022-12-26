@@ -7,6 +7,7 @@ import {saveAs} from 'file-saver';
 const Brain = function({data}) {
   const net = new brain.recurrent.LSTMTimeStep();
   const [netJSON, setNetJSON] = useState(null);
+  const [loaded, netLoaded] = useState(false);
 
   var trainBrain = function() {
     if (data.length === 0) {
@@ -14,32 +15,58 @@ const Brain = function({data}) {
       return;
     }
 
-    var trainingData = helpers.dataConvert(data, ['open', 'close']);
-    var options = {iterations: 10000, log: true, logPeriod: 1000, errorThresh: 0.01};
+    var trainingData = helpers.dataConvert(data, ['open', 'high', 'vwap']);
+    var options = {iterations: 20000, log: true, logPeriod: 1000, errorThresh: 0.01};
 
     console.log('Training on set: ', trainingData);
     net.train([trainingData], options);
 
     // TODO: separate testing and save different nets via ax request
-    var test = trainingData.slice(trainingData.length - 5);
+    let test = trainingData.slice(0, 20);
+
     let ran = net.run(test);
 
-    console.log(ran);
+    let result = [];
+    let expected = trainingData[test.length + 1];
+
+    ran.map(function(val) {
+      result.push(helpers.trunc(val));
+    })
+
+    console.log('Result: ', result, 'Expected: ', expected);
+
+    let forecast = net.forecast(test, 15);
+    result = [];
+
+    forecast.map(function(prediction) {
+      var p = [];
+
+      prediction.map(function(val) {
+        p.push(helpers.trunc(val));
+      })
+
+      result.push(p);
+    })
+
+    console.log('Forecast: ', result);
 
     let json = JSON.stringify(net.toJSON());
     let file = new Blob([json], {type: "text/plain;charset=utf-8"});
     saveAs(file, "net.txt");
   };
 
-  useEffect(function() {
-    var netJSON = ax.getNet(setNetJSON);
+  var getNetJSON = function() {
+    ax.getNet(setNetJSON);
 
-    if (netJSON) {
+    if (netJSON && !loaded) {
       net.fromJSON(netJSON);
+      netLoaded(true);
 
       console.log('Neural Network loaded: ', net);
     }
-  }, [netJSON]);
+  };
+
+  useEffect(getNetJSON, [netJSON]);
 
   return (
     <div className='brain'>
@@ -50,14 +77,17 @@ const Brain = function({data}) {
 
 export default Brain;
 
-// net.run() for single prediction, forecast for multiples.
-//
-// const forecast = net.forecast(
-//   [
-//     [4, 5],
-//     [2, 4],
-//   ],
-//   3
-// );
-
-// console.log('next 3 predictions', forecast);
+// var trainingData = [
+    //   [1,  1, 1],
+    //   [2, .9, 1],
+    //   [3, .8, 2],
+    //   [4, .7, 2],
+    //   [5, .6, 2],
+    //   [6, .5, 2],
+    //   [7, .4, 3],
+    //   [8, .3, 3],
+    //   [9, .2, 3],
+    //   [10,.1, 4],
+    //   [11,.1, 4],
+    //   [12,.1, 5]
+    // ];

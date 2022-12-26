@@ -136,7 +136,7 @@ var helpers = {
         entryData.push(entry[key]);
       })
 
-      converted.push(entryData);
+      converted.unshift(entryData);
     })
 
     return converted;
@@ -146,7 +146,7 @@ var helpers = {
 var dateString = helpers.getDateFromCookie();
 
 helpers.dateString = dateString;
-helpers.labels = ['ticker', 'date', 'open', 'close', 'high', 'low', 'volume', 'vwap'];
+helpers.labels = ['ticker', 'date', 'dateEnd', 'open', 'close', 'high', 'low', 'volume', 'vwap'];
 helpers.startDate = {
   year:  dateString.slice(0, 4),
   month: dateString.slice(5, 7),

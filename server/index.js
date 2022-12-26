@@ -25,11 +25,17 @@ app.get('/tickers', function(req, res) {
       case 'ticker':
         filter[key] = query[key];
         break;
+      case 'dateEnd':
+        console.log(query);
+        filter.date = {'$gte': filter.date, '$lte': query.dateEnd};
+        break;
       default:
         filter[key] = controller.numQuery(query[key]);
         break;
     }
   }
+
+  console.log(filter)
 
   controller.findTickers(filter, sort, res);
 });
