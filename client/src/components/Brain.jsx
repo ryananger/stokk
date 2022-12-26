@@ -3,6 +3,7 @@ import ax from '../ax.js';
 import helpers from '../helpers.js';
 import * as brain from 'brain.js';
 import {saveAs} from 'file-saver';
+import Draw from './Draw.jsx';
 
 const net = new brain.recurrent.LSTMTimeStep();
 const Brain = function({data, setVis}) {
@@ -90,6 +91,7 @@ const Brain = function({data, setVis}) {
           <button className='brainButton' onClick={testBrain}>test</button>
         </div>
       </div>
+      <Draw data={data}/>
     </div>
   )
 }
