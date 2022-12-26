@@ -4,10 +4,10 @@ import helpers from '../helpers.js';
 import * as brain from 'brain.js';
 import {saveAs} from 'file-saver';
 
-const Brain = function({data}) {
-  const net = new brain.recurrent.LSTMTimeStep();
+const net = new brain.recurrent.LSTMTimeStep();
+const Brain = function({data, setVis}) {
   const [netJSON, setNetJSON] = useState(null);
-  const [loaded, netLoaded] = useState(false);
+  const [loaded, netLoaded]   = useState(false);
 
   var trainBrain = function() {
     if (data.length === 0) {
@@ -16,18 +16,35 @@ const Brain = function({data}) {
     }
 
     var trainingData = helpers.dataConvert(data, ['open', 'high', 'vwap']);
-    var options = {iterations: 20000, log: true, logPeriod: 1000, errorThresh: 0.01};
+    var options = {
+      iterations: 20000,
+      log: true,
+      logPeriod: 1000,
+      errorThresh: 0.01
+    };
 
     console.log('Training on set: ', trainingData);
     net.train([trainingData], options);
 
+    let json = JSON.stringify(net.toJSON());
+    let file = new Blob([json], {type: "text/plain;charset=utf-8"});
+    saveAs(file, "net.txt");
+  };
+
+  var testBrain = function() {
+    if (data.length === 0) {
+      alert('Query data before testing.');
+      return;
+    }
+
     // TODO: separate testing and save different nets via ax request
-    let test = trainingData.slice(0, 20);
+    var testingData = helpers.dataConvert(data, ['open', 'high', 'vwap']);
+    let test = testingData.slice(0, 20);
 
     let ran = net.run(test);
 
     let result = [];
-    let expected = trainingData[test.length + 1];
+    let expected = testingData[test.length + 1];
 
     ran.map(function(val) {
       result.push(helpers.trunc(val));
@@ -49,10 +66,6 @@ const Brain = function({data}) {
     })
 
     console.log('Forecast: ', result);
-
-    let json = JSON.stringify(net.toJSON());
-    let file = new Blob([json], {type: "text/plain;charset=utf-8"});
-    saveAs(file, "net.txt");
   };
 
   var getNetJSON = function() {
@@ -69,8 +82,14 @@ const Brain = function({data}) {
   useEffect(getNetJSON, [netJSON]);
 
   return (
-    <div className='brain'>
-      <input type='submit' id='brainButton' onClick={trainBrain} value='brain'/>
+    <div className='visualContainer v'>
+      <div className='brainHeader h'>
+        <h3>brain</h3>
+        <div className='brainButtons h'>
+          <button className='brainButton' onClick={trainBrain}>train</button>
+          <button className='brainButton' onClick={testBrain}>test</button>
+        </div>
+      </div>
     </div>
   )
 }
