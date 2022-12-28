@@ -22,11 +22,16 @@ app.get('/tickers', function(req, res) {
   for (var key in query) {
     switch (key) {
       case 'date':
+        filter.date = query.date;
+        break;
       case 'ticker':
-        filter[key] = query[key];
+        let tickerString = query.ticker.replaceAll(' ', '');
+        let tickers = tickerString.split(',');
+
+        console.log(tickers);
+        filter.ticker = tickers;
         break;
       case 'dateEnd':
-        console.log(query);
         filter.date = {'$gte': filter.date, '$lte': query.dateEnd};
         break;
       default:

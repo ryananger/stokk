@@ -6,6 +6,7 @@ const readNet = function(res) {
       res.send('Empty neural net.');
       return;
     }
+
     var net = JSON.parse(data);
 
     res.json(net);

@@ -35,25 +35,49 @@ const Draw = function({data}) {
   const labels = function() {
     let labels = [];
 
-    data.map(function(entry, i) {
+    data.map(function(entry) {
       let date  = entry.date;
       let month = Number(date.slice(5, 7));
       let day   = Number(date.slice(8));
 
-      labels.push([day, helpers.toMonthName(month)]);
+      let label = [day, helpers.toMonthName(month)];
+
+      if (labels.indexOf(label) === -1) {
+        labels.push(label);
+      }
     })
 
     return labels;
   }();
 
-  const prepData = function(type) {
+  const tickers = function() {
+    let tickers = {};
+
+    data.map(function(entry) {
+      if (!tickers[entry.ticker]) {
+        tickers[entry.ticker] = [];
+      }
+
+      tickers[entry.ticker].push(entry);
+    })
+
+    return tickers;
+  }();
+
+  const prepData = function(type, set) {
     const prepped = [];
 
+    let tickerData = tickers[set];
+
     labels.map(function(label, i) {
+      if (!tickerData[i]) {
+        return;
+      }
+
       if (type === 'bar') {
-        prepped.push([data[i].open, data[i].close]);
+        prepped.push([tickerData[i].open, tickerData[i].close]);
       } else {
-        prepped.push(data[i].open);
+        prepped.push(tickerData[i].open);
       }
     })
 
@@ -62,24 +86,32 @@ const Draw = function({data}) {
 
   const barData = {
     labels,
-    datasets: [
-      {
-        data: prepData('bar')
+    datasets: function() {
+      var sets = [];
+
+      for (var ticker in tickers) {
+        sets.push({data: prepData('bar', ticker)});
       }
-    ]
+
+      return sets;
+    }()
   };
 
   const lineData = {
     labels,
-    datasets: [
-      {
-        data: prepData('line')
+    datasets: function() {
+      var sets = [];
+
+      for (var ticker in tickers) {
+        sets.push({data: prepData('line', ticker)});
       }
-    ]
+
+      return sets;
+    }()
   };
 
   var renderChart = function() {
-    if (data.length > 45) {
+    if (data.length > 60) {
       return <Line options={options.line} data={lineData}/>
     } else {
       return <Bar options={options.bar} data={barData}/>

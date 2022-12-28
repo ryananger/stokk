@@ -13,6 +13,11 @@ const Interface = function({setData}) {
     var form = e.target;
     var filter = {};
 
+    if (!form.ticker.value) {
+      alert('Query at least one ticker.');
+      return;
+    }
+
     labels.map(function(key) {
       if (!form[key].value) {
         return;

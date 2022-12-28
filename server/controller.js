@@ -13,11 +13,42 @@ const controller = {
       })
   },
   findTickers: function(filter, sort, res) {
-    Ticker.find(filter)
+    var sendBody = [];
+    var proms    = [];
+
+    filter.ticker.map(function(ticker) {
+      var prom = new Promise(function(resolve) {
+        controller.findTicker(ticker, filter, sort, resolve);
+      });
+
+      proms.push(prom);
+    })
+
+    Promise.all(proms)
+      .then(function(all) {
+        all.map(function(ticker) {
+          if (!ticker) {
+            return;
+          }
+
+          sendBody = sendBody.concat(ticker);
+        })
+
+        res.json(sendBody);
+      })
+
+  },
+  findTicker: function(ticker, filter, sort, finish) {
+    let thisFilter = {
+      ...filter,
+      ticker: ticker
+    };
+
+    Ticker.find(thisFilter)
       .sort(sort)
       .then(function(tickers) {
         if (tickers.length === 0) {
-          res.send('No tickers found.');
+          finish(false);
           return;
         }
 
@@ -27,8 +58,10 @@ const controller = {
           sendBody.push(ticker.toObject());
         });
 
-        res.json(sendBody);
+        finish(sendBody);
+        return sendBody;
       })
+
   },
 
   numQuery: function(expression) {
