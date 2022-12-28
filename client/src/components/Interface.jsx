@@ -41,6 +41,14 @@ const Interface = function({setData}) {
     setSort(e.target.id.replace('Radio', ''));
   };
 
+  var setDate = function() {
+    var dateEnd = document.querySelector('#dateEnd');
+
+    if (!dateEnd.value) {
+      dateEnd.value = helpers.getTodayString();
+    }
+  };
+
   var renderForm = function() {
     var rendered = [];
     var date = [];
@@ -55,7 +63,7 @@ const Interface = function({setData}) {
           <label key='date'>
             <div className='formTag'>dates:</div>
             <input type='radio' id='dateRadio' checked={(sort === 'date')} onChange={sortChange}/>
-            <input type='date' id='date'/>
+            <input type='date' id='date' onChange={setDate}/>
           </label>
         )
         date.push(

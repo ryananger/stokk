@@ -11,7 +11,8 @@ var helpers = {
     var date;
 
     if (!document.cookie) {
-      document.cookie = 'date=2021-01-01';
+      //document.cookie = 'date=2021-01-01';
+      document.cookie = 'date=2022-12-20';
     }
 
     date = document.cookie.slice(5);
@@ -30,7 +31,19 @@ var helpers = {
 
     return str;
   },
-  toMonthName: function(monthNumber) {
+  getTodayString: function() {
+    var today = new Date();
+    var current = {
+      year:  (today.getFullYear()).toString(),
+      month: (today.getMonth() + 1).toString(),
+      day:   (today.getDate()).toString()
+    };
+
+    var todayString = helpers.dateToString(current);
+
+    return todayString;
+  },
+  getMonthName: function(monthNumber) {
     var date = new Date();
     date.setMonth(monthNumber - 1);
 
