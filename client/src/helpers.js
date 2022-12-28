@@ -6,6 +6,7 @@ var helpers = {
 
     return Math.trunc(num*100)/100;
   },
+
   getDateFromCookie: function() {
     var date;
 
@@ -28,6 +29,12 @@ var helpers = {
     var str = date.year + '-' + date.month.padStart(2, '0') + '-' + date.day.padStart(2, '0');
 
     return str;
+  },
+  toMonthName: function(monthNumber) {
+    var date = new Date();
+    date.setMonth(monthNumber - 1);
+
+    return date.toLocaleString([], {month: 'long'}).slice(0, 3);
   },
   newDate: function(date) {
     var newDate;

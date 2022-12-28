@@ -12,7 +12,9 @@ import {
   BarController
 } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
-import optionsImport from './options.js';
+
+import options from './options.js';
+import helpers from '../../helpers.js';
 
 ChartJS.register(
   LinearScale,
@@ -25,8 +27,6 @@ ChartJS.register(
   BarController
 );
 
-var options = optionsImport;
-var min, max;
 const Draw = function({data}) {
   if (data.length === 0) {
     return;
@@ -34,14 +34,13 @@ const Draw = function({data}) {
 
   const labels = function() {
     let labels = [];
-    let onMonth = null;
 
     data.map(function(entry, i) {
-      var date  = new Date(entry.date);
-      var month = date.getMonth() + 1;
-      var day   = date.getDate() + 1;
+      let date  = entry.date;
+      let month = Number(date.slice(5, 7));
+      let day   = Number(date.slice(8));
 
-      labels.push(`${month}/${day}`);
+      labels.push([day, helpers.toMonthName(month)]);
     })
 
     return labels;
@@ -74,14 +73,13 @@ const Draw = function({data}) {
     labels,
     datasets: [
       {
-        data: prepData('line'),
-        type: 'line'
+        data: prepData('line')
       }
     ]
   };
 
   var renderChart = function() {
-    if (data.length > 60) {
+    if (data.length > 45) {
       return <Line options={options.line} data={lineData}/>
     } else {
       return <Bar options={options.bar} data={barData}/>

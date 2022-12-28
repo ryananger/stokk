@@ -15,82 +15,64 @@ const colorize = function() {
   };
 };
 
+const scales = {
+  x: {
+    reverse: true,
+    ticks: {
+      align: 'center',
+      color: purple
+    },
+    border: {
+      display: false
+    },
+    grid: {
+      display: false
+    }
+  },
+  y: {
+    position: 'right',
+    ticks: {
+      color: purple
+    },
+    border: {
+      display: false
+    },
+    grid: {
+      color: purple2
+    }
+  }
+};
+
+const baseOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  interaction: {
+    mode: 'index',
+    intersect: false,
+  },
+  layout: {
+    padding: 12
+  },
+  scales: scales
+};
+
 const options = {
   bar: {
+    ...baseOptions,
+
     minBarLength: 5,
     borderWidth: 1,
     borderSkipped: false,
-    backgroundColor: colorize(),
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
-    scales: {
-      x: {
-        reverse: true,
-        ticks: {
-          color: purple
-        },
-        border: {
-          display: false
-        },
-        grid: {
-          display: false
-        }
-      },
-      y: {
-        position: 'right',
-        ticks: {
-          color: purple
-        },
-        border: {
-          display: false
-        },
-        grid: {
-          color: purple2
-        }
-      }
-    }
+    backgroundColor: colorize()
+
   },
   line: {
+    ...baseOptions,
+
     fill: false,
     radius: 0,
     borderWidth: 1,
-    borderColor: yellow,
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
-    scales: {
-      x: {
-        reverse: true,
-        ticks: {
-          color: purple
-        },
-        border: {
-          display: false
-        },
-        grid: {
-          display: false
-        }
-      },
-      y: {
-        position: 'right',
-        ticks: {
-          color: purple
-        },
-        border: {
-          display: false
-        },
-        grid: {
-          color: purple2
-        }
-      }
-    }
+    borderColor: yellow
   }
 };
 
