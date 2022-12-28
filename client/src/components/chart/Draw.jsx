@@ -47,34 +47,8 @@ const Draw = function({data}) {
     return labels;
   }();
 
-  const getMinMax = function() {
-    min = null;
-    max = null;
-
-    data.map(function(entry) {
-      if (!min || entry.open < min) {
-        min = Math.floor(entry.open);
-      }
-
-      if (!max || entry.open > max) {
-        max = Math.ceil(entry.open);
-      }
-    })
-
-    if (min <= 1) {
-      min = 0;
-    } else {
-      min--;
-    }
-
-    options.bar.scales.y.suggestedMin = min;
-    options.bar.scales.y.suggestedMax = max;
-  };
-
   const prepData = function(type) {
     const prepped = [];
-
-    //getMinMax();
 
     labels.map(function(label, i) {
       if (type === 'bar') {

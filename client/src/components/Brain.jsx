@@ -20,7 +20,7 @@ const Brain = function({data, setVis}) {
 
     var trainingData = helpers.dataConvert(data, ['open', 'high', 'vwap']);
     var options = {
-      iterations: 20000,
+      iterations: 5000,
       log: true,
       logPeriod: 1000,
       errorThresh: 0.01
