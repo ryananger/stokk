@@ -3,7 +3,9 @@ import ax from '../ax.js';
 import helpers from '../helpers.js';
 import * as brain from 'brain.js';
 import {saveAs} from 'file-saver';
-import Draw from './Draw2.jsx';
+import Draw from './chart/Draw.jsx';
+
+import testData from './chart/testData.js';
 
 const net = new brain.recurrent.LSTMTimeStep();
 const Brain = function({data, setVis}) {

@@ -88,7 +88,7 @@ var ax = {
     axios.get(urlBase + 'net')
       .then(function(response) {
         if (typeof response.data === 'string') {
-          alert(response.data);
+          console.log(response.data);
           return;
         }
 
