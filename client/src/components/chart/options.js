@@ -1,6 +1,9 @@
-var yellow  = 'rgb(230, 195, 130)';
-var purple  = 'rgb(134, 100, 145)';
-var purple2 = 'rgb(75, 54, 82)';
+var colors = {
+  yellow1: 'rgb(230, 195, 130)',
+  yellow2: 'rgb(232, 193, 121)',
+  purple1: 'rgb(134, 100, 145)',
+  purple2: 'rgb(75, 54, 82)',
+};
 
 const colorize = function() {
   return (ctx) => {
@@ -8,10 +11,10 @@ const colorize = function() {
     var close = ctx.raw[1];
 
     if (open > close) {
-      return purple;
+      return colors.purple1;
     }
 
-    return yellow;
+    return colors.yellow1;
   };
 };
 
@@ -20,7 +23,7 @@ const scales = {
     reverse: true,
     ticks: {
       align: 'center',
-      color: purple
+      color: colors.purple1
     },
     border: {
       display: false
@@ -32,13 +35,13 @@ const scales = {
   y: {
     position: 'right',
     ticks: {
-      color: purple
+      color: colors.purple1
     },
     border: {
       display: false
     },
     grid: {
-      color: purple2
+      color: colors.purple2
     }
   }
 };
@@ -61,10 +64,9 @@ const options = {
     ...baseOptions,
 
     minBarLength: 5,
-    borderWidth: 1,
+    borderWidth: 0,
     borderSkipped: false,
     backgroundColor: colorize()
-
   },
   line: {
     ...baseOptions,
@@ -72,7 +74,7 @@ const options = {
     fill: false,
     radius: 0,
     borderWidth: 1,
-    borderColor: yellow
+    borderColor: colors.yellow1
   }
 };
 

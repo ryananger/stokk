@@ -33,7 +33,8 @@ const Draw = function({data}) {
   }
 
   const tickers = ch.getTickers(data);
-  const labels  = ch.getLabels(data);
+  const first   = Object.keys(tickers)[0];
+  const labels  = ch.getLabels(tickers[first]);
 
   var renderChart = function() {
     if (data.length > 60 || Object.keys(tickers).length > 1) {

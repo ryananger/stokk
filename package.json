@@ -11,6 +11,7 @@
   "dependencies": {
     "brain.js": "^2.0.0-beta.17",
     "chart.js": "^4.1.1",
+    "chroma-js": "^2.4.2",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "dotenv-webpack": "^8.0.1",

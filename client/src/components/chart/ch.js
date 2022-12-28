@@ -1,4 +1,7 @@
 import helpers from '../../helpers.js';
+import chroma from 'chroma-js';
+
+var yellow = 'rgb(230, 195, 130)';
 
 const getTickers = function(data) {
   let tickers = {};
@@ -38,8 +41,26 @@ const getDataForType = function(type, tickers, labels) {
     datasets: function() {
       var sets = [];
 
+      var i = 0;
       for (var ticker in tickers) {
-        sets.push({data: prepData(type, ticker, tickers, labels)});
+        sets.push({
+          label: ticker,
+          borderColor: function() {
+            let h = chroma(yellow).get('hsl.h');
+            let s = chroma(yellow).get('hsl.s');
+            let l = chroma(yellow).get('hsl.l');
+
+            let hInc = h + (i * 80);
+            let nh = hInc < 360 ? hInc : hInc - 360;
+
+            let color = chroma.hsl(nh, s, l).hex();
+
+            return color;
+          }(),
+          data: prepData(type, ticker, tickers, labels)
+        });
+
+        i++;
       }
 
       return sets;
