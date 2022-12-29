@@ -4,7 +4,7 @@ import helpers from '../helpers.js';
 
 const labels = helpers.labels;
 
-const Interface = function({setData}) {
+const Interface = function({data, setData}) {
   const [sort, setSort] = useState('date');
   const [infoView, setInfo] = useState('default');
 
@@ -114,15 +114,12 @@ const Interface = function({setData}) {
 
   var renderInfo = function() {
     var infos = {
-      default: function() {
-        return (
-          <div className='defaultInfo v'>
-            default
+      default: (
+          <div className='defaultInfo'>
+            {dataInfo()}
           </div>
-        )
-      }(),
-      search: function() {
-        return (
+        ),
+      search: (
           <div className='searchInfo v'>
             Click the button to sort query by that parameter.
             <br/><br/>
@@ -140,10 +137,17 @@ const Interface = function({setData}) {
             </label>
           </div>
         )
-      }()
     };
 
     return infos[infoView];
+  };
+
+  var dataInfo = function() {
+    if (!data[0]) {
+      return 'Query the database below to get stock data.'
+    } else {
+      return `Found ${data.length} entries.`
+    }
   };
 
   var toggleInfo = function() {

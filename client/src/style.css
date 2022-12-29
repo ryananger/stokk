@@ -61,12 +61,24 @@ h1, h2, h3 {
 }
 
 .infoBox {
-  border: 1px solid rgb(95, 67, 104);
-  border-style: none none solid none;
   margin-bottom: 12px;
   height: 100%;
-  padding-bottom: 12px;
   justify-content: flex-start;
+}
+
+.defaultInfo {
+  border: 1px solid rgb(95, 67, 104);
+  height: 100%;
+  padding: 4px;
+  padding-left: 12px;
+
+  color:rgb(134 100 145);
+}
+
+.searchInfo {
+  border: 1px solid rgb(95, 67, 104);
+  border-style: none none solid none;
+  padding-bottom: 12px;
 }
 
 .tickerLabel {

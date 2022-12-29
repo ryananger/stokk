@@ -27,7 +27,7 @@ const App = function() {
       <Head data={data} toggle={toggle} running={running}/>
 
       <div className='interface h'>
-        <Interface setData={setData}/>
+        <Interface data={helpers.reverseData(data)} setData={setData}/>
         <Brain data={helpers.reverseData(data)}/>
       </div>
 
