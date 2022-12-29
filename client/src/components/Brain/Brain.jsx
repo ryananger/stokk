@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import ax from '../ax.js';
-import helpers from '../helpers.js';
+import ax from '../../ax.js';
+import helpers from '../../helpers.js';
 import * as brain from 'brain.js';
 import {saveAs} from 'file-saver';
-import Draw from './chart/Draw.jsx';
 
+import Draw from './chart/Draw.jsx';
 import testData from './chart/testData.js';
 
 const net = new brain.recurrent.LSTMTimeStep({
@@ -59,11 +59,12 @@ const Brain = function({data, setVis}) {
     })
 
     console.log(`Result for ${exp.date}: `);
-    console.log('Open:  ', ran[0], 'Expected open:  ',  exp.open);
-    console.log('Close: ', ran[1], 'Expected close: ', exp.close);
+    console.log('Open:   ', ran[0], 'Expected open:   ',  exp.open);
+    console.log('Close:  ', ran[1], 'Expected close:  ', exp.close);
+    console.log('Change: ', ((ran[1] - ran[0])/ran[0]) * 100, 'Expected change: ', ((exp.close - exp.open)/exp.open) * 100)
 
-    let forecast = net.forecast(test, 5);
-    let expected = data.slice(20, 25);
+    let forecast = net.forecast(test, 15);
+    let expected = data.slice(20, 35);
 
     forecast.map(function(prediction, i) {
       var p = [];

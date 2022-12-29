@@ -43,12 +43,6 @@ var helpers = {
 
     return todayString;
   },
-  getMonthName: function(monthNumber) {
-    var date = new Date();
-    date.setMonth(monthNumber - 1);
-
-    return date.toLocaleString([], {month: 'long'}).slice(0, 3);
-  },
   newDate: function(date) {
     var newDate;
 
@@ -154,22 +148,6 @@ var helpers = {
     })
 
     return reversed;
-  },
-  dataConvert: function(data, keys) {
-    var converted = [];
-
-    data.map(function(entry) {
-      var change       = (entry.close/entry.open) - 1;
-      var vwapOverOpen = entry.vwap/entry.open;
-
-      var config = [entry.open, entry.high, entry.low];
-
-      var entryData = config;
-
-      converted.push(entryData);
-    })
-
-    return converted;
   }
 };
 

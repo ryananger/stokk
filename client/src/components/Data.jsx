@@ -52,7 +52,9 @@ const Data = function({data}) {
   return (
     <div id='dataRender'>
       {renderLabels()}
-      {renderData()}
+      <div id='dataTable'>
+        {renderData()}
+      </div>
     </div>
   )
 }

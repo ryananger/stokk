@@ -6,7 +6,7 @@ import '../style.css';
 
 import Interface from './Interface.jsx';
 import Head from './Head.jsx';
-import Brain from './Brain.jsx';
+import Brain from './Brain/Brain.jsx';
 import Data from './Data.jsx';
 
 const startDate  = helpers.startDate;

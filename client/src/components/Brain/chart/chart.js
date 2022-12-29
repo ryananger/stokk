@@ -1,7 +1,11 @@
-import helpers from '../../helpers.js';
 import chroma from 'chroma-js';
 
-var yellow = 'rgb(230, 195, 130)';
+const getMonthName = function(monthNumber) {
+  var date = new Date();
+  date.setMonth(monthNumber - 1);
+
+  return date.toLocaleString([], {month: 'long'}).slice(0, 3);
+};
 
 const getTickers = function(data) {
   let tickers = {};
@@ -25,7 +29,7 @@ const getLabels = function(data) {
     let month = Number(date.slice(5, 7));
     let day   = Number(date.slice(8));
 
-    let label = [day, helpers.getMonthName(month)];
+    let label = [day, getMonthName(month)];
 
     if (labels.indexOf(label) === -1) {
       labels.push(label);
@@ -43,22 +47,27 @@ const getDataForType = function(type, tickers, labels) {
 
       var i = Object.keys(tickers).length - 1;
       for (var ticker in tickers) {
-        sets.push({
+        var set = {
           label: ticker,
-          borderColor: function() {
-            let h = chroma(yellow).get('hsl.h');
-            let s = chroma(yellow).get('hsl.s');
-            let l = chroma(yellow).get('hsl.l');
-
-            let hInc = h + (i * 80);
-            let nh = hInc < 360 ? hInc : hInc - 360;
-
-            let color = chroma.hsl(nh, s, l).hex();
-
-            return color;
-          }(),
           data: prepData(type, ticker, tickers, labels)
-        });
+        };
+
+        if (type === 'line') {
+          let yellow = 'rgb(230, 195, 130)';
+          let h = chroma(yellow).get('hsl.h');
+          let s = chroma(yellow).get('hsl.s');
+          let l = chroma(yellow).get('hsl.l');
+
+          let hInc = h + (i * 80);
+          let nh = hInc < 360 ? hInc : hInc - 360;
+
+          let color = chroma.hsl(nh, s, l).hex();
+
+          set.borderColor = color;
+          set.backgroundColor = color;
+        }
+
+        sets.push(set);
 
         i--;
       }
@@ -90,11 +99,11 @@ const prepData = function(type, set, tickers, labels) {
   return prepped;
 };
 
-const ch = {
+const chart = {
   getTickers,
   getLabels,
   getDataForType,
   prepData
 };
 
-export default ch;
+export default chart;

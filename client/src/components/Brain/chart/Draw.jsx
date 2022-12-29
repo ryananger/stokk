@@ -14,7 +14,7 @@ import {
 import { Bar, Line } from 'react-chartjs-2';
 
 import options from './options.js';
-import ch from './ch.js';
+import ch from './chart.js';
 
 ChartJS.register(
   LinearScale,

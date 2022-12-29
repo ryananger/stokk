@@ -57,10 +57,9 @@ h1, h2, h3 {
   min-width: 240px;
 }
 
-.searchHead {
+.infoBox {
   border: 1px solid rgb(95, 67, 104);
   border-style: none none solid none;
-  height: 160px;
   margin-bottom: 12px;
   justify-content: flex-end;
   padding-bottom: 12px;
@@ -201,6 +200,21 @@ canvas {
 #dataRender {
   width: 90vw;
   max-width: 1100px;
+}
+
+#dataTable {
+  max-height: 92vh;
+  overflow: scroll;
+  overflow-x: unset;
+}
+
+::-webkit-scrollbar {
+  border: 1px solid rgb(104, 72, 112);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 1px solid rgb(104, 72, 112);
+  background-color: rgba(104, 72, 112, 0.4);
 }
 
 .tableKey, .entryKey {
