@@ -6,6 +6,7 @@ const labels = helpers.labels;
 
 const Interface = function({setData}) {
   const [sort, setSort] = useState('date');
+  const [infoView, setInfo] = useState('default');
 
   var handleSubmit = function(e) {
     e.preventDefault();
@@ -75,6 +76,19 @@ const Interface = function({setData}) {
         return;
       }
 
+      if (label === 'ticker') {
+        rendered.push(
+          <label key={label + 'Label'} className='tickerLabel'>
+            <div className='searchInfoButton v' onMouseEnter={toggleInfo} onMouseLeave={toggleInfo}>i</div>
+            <div className='formTag'>{label}:</div>
+            <input type='radio' id={label + 'Radio'} checked={(sort === label)} onChange={sortChange}/>
+            <input type='text' id={label}/>
+          </label>
+        )
+
+        return;
+      }
+
       rendered.push(
         <label key={label + 'Label'}>
           <div className='formTag'>{label}:</div>
@@ -98,26 +112,52 @@ const Interface = function({setData}) {
     return rendered;
   };
 
+  var renderInfo = function() {
+    var infos = {
+      default: function() {
+        return (
+          <div className='defaultInfo v'>
+            default
+          </div>
+        )
+      }(),
+      search: function() {
+        return (
+          <div className='searchInfo v'>
+            Click the button to sort query by that parameter.
+            <br/><br/>
+            Format comparisons like this:
+            <br/><br/>
+            <label className='dummyLabel'>
+              <div className='formTag'>open:</div>
+              <input type='radio' id='dummy1' checked={0} readOnly/>
+              <input type='text' value='>3, <=4' readOnly/>
+            </label>
+            <label className='dummyLabel'>
+              <div className='formTag'>close:</div>
+              <input type='radio' id='dummy2'checked readOnly/>
+              <input type='text' value='>4' readOnly/>
+            </label>
+          </div>
+        )
+      }()
+    };
+
+    return infos[infoView];
+  };
+
+  var toggleInfo = function() {
+    if (infoView !== 'search') {
+      setInfo('search');
+    } else {
+      setInfo('default');
+    }
+  };
+
   return (
     <div className='interLeft v'>
       <div className='infoBox v'>
-        <div className='searchInfo v'>
-          Click the button to sort query by that paramater.
-          <br/><br/>
-          Format comparisons like this:
-          <br/><br/>
-          <label className='dummyLabel'>
-            <div className='formTag'>open:</div>
-            <input type='radio' id='dummy1' checked={0} readOnly/>
-            <input type='text' value='>3, <=4' readOnly/>
-          </label>
-          <label className='dummyLabel'>
-            <div className='formTag'>close:</div>
-            <input type='radio' id='dummy2'checked readOnly/>
-            <input type='text' value='>4' readOnly/>
-          </label>
-        </div>
-
+        {renderInfo()}
       </div>
 
       <form id='searchForm' onSubmit={handleSubmit} autoComplete='off'>
