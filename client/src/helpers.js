@@ -143,11 +143,27 @@ var helpers = {
   reverseData: function(data) {
     var reversed = [];
 
-    data.map(function(entry) {
-      reversed.unshift(entry);
-    })
+    if (data[0]) {
+      data.map(function(entry) {
+        reversed.unshift(entry);
+      })
+    }
 
     return reversed;
+  },
+  getPages: function(data) {
+    var pages = [];
+
+    for (var i = 0; i < data.length/500; i++) {
+      var start = i * 500;
+      var end   = (i * 500) + 500;
+
+      var slice = data.slice(start, end);
+
+      pages.push(slice);
+    }
+
+    return pages;
   }
 };
 

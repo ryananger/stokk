@@ -27,7 +27,7 @@ ChartJS.register(
   BarController
 );
 
-const Draw = function({data}) {
+const Draw = function({data, queried}) {
   const tickers = ch.getTickers(data);
   const first   = Object.keys(tickers)[0];
   const labels  = ch.getLabels(tickers[first]);

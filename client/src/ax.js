@@ -32,7 +32,7 @@ var ax = {
       var results = helpers.parseData(date, data.results);
 
       var chunks = [];
-      var chunk = [];
+      var chunk  = [];
 
       results.map(function(result, i) {
         if (i === results.length - 1) {
@@ -64,7 +64,7 @@ var ax = {
     };
   },
 
-  getTickers: function(filter, sortBy, setData) {
+  getTickers: function(filter, sortBy, setData, cb) {
     if (Object.keys(filter).length === 0) {
       alert('Request must not be empty.');
       return;
@@ -81,6 +81,7 @@ var ax = {
           return;
         }
 
+        cb();
         setData(response.data);
       })
   },

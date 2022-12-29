@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import helpers from '../helpers.js';
 
 const labels = helpers.labels;
 
 const Data = function({data}) {
+  const [page, setPage] = useState(0);
+  const pages = helpers.getPages(data);
+
   var renderLabels = function() {
     var rendered = [];
 
@@ -25,13 +28,13 @@ const Data = function({data}) {
   };
 
   var renderData = function() {
-    if (data.length === 0) {
+    if (!data[0]) {
       return;
     }
 
     var rendered = [];
 
-    data.map(function(entry, i) {
+    pages[page].map(function(entry, i) {
       var tag = '';
 
       if (i % 2 === 0) {

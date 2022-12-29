@@ -4,7 +4,7 @@ import helpers from '../helpers.js';
 
 const labels = helpers.labels;
 
-const Interface = function({data, setData}) {
+const Interface = function({data, queried, setData, setQueried}) {
   const [sort, setSort] = useState('date');
   const [infoView, setInfo] = useState('default');
 
@@ -13,11 +13,10 @@ const Interface = function({data, setData}) {
 
     var form = e.target;
     var filter = {};
+    var queriedTickers = [];
 
-    if (!form.ticker.value) {
-      alert('Query at least one ticker.');
-      return;
-    }
+    var validForm = false;
+    var numFields = 0;
 
     labels.map(function(key) {
       if (!form[key].value) {
@@ -25,17 +24,34 @@ const Interface = function({data, setData}) {
       } else {
         var val = form[key].value;
 
+        numFields++;
+        if (numFields > 1) {
+          validForm = true;
+        }
+
         if (key === 'ticker') {
           val = val.toUpperCase();
+          queriedTickers.push(val);
+          validForm = true;
         }
 
         filter[key] = val;
       }
     })
 
+
+    if (!validForm) {
+      alert('Empty query. Query at least one ticker OR at least one number and date parameter.');
+      return;
+    }
+
     console.log(filter)
 
-    ax.getTickers(filter, sort, setData);
+    var cb = function() {
+      setQueried(queriedTickers);
+    };
+
+    ax.getTickers(filter, sort, setData, cb);
   };
 
   var sortChange = function(e) {

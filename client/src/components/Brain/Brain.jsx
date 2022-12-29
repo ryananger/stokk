@@ -14,7 +14,7 @@ const net = new brain.recurrent.LSTMTimeStep({
   outputSize: 3,
 });
 
-const Brain = function({data, setVis}) {
+const Brain = function({data, queried}) {
   const [netJSON, setNetJSON] = useState(null);
   const [loaded, netLoaded]   = useState(false);
 
@@ -89,8 +89,8 @@ const Brain = function({data, setVis}) {
   };
 
   var draw = function() {
-    if (data[0]) {
-      return <Draw data={data}/>
+    if (data[0] && queried[0]) {
+      return <Draw data={data} queried={queried}/>
     }
   };
 

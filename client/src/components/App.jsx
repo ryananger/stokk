@@ -15,6 +15,9 @@ const App = function() {
   const [data, setData]       = useState([]);
   const [marketDate, setDate] = useState(startDate);
   const [running, toggle]     = useState(false);
+  const [queried, setQueried] = useState([]);
+
+  const reversed = helpers.reverseData(data);
 
   useEffect(function() {
     if (running) {
@@ -24,11 +27,11 @@ const App = function() {
 
   return (
     <div id='app'>
-      <Head data={data} toggle={toggle} running={running}/>
+      <Head toggle={toggle} running={running}/>
 
       <div className='interface h'>
-        <Interface data={helpers.reverseData(data)} setData={setData}/>
-        <Brain data={helpers.reverseData(data)}/>
+        <Interface data={reversed} queried={queried} setData={setData} setQueried={setQueried}/>
+        <Brain data={reversed} queried={queried}/>
       </div>
 
       <Data data={data}/>
