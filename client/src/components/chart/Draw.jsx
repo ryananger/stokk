@@ -28,10 +28,6 @@ ChartJS.register(
 );
 
 const Draw = function({data}) {
-  if (data.length === 0) {
-    return;
-  }
-
   const tickers = ch.getTickers(data);
   const first   = Object.keys(tickers)[0];
   const labels  = ch.getLabels(tickers[first]);

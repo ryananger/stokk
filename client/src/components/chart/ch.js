@@ -41,7 +41,7 @@ const getDataForType = function(type, tickers, labels) {
     datasets: function() {
       var sets = [];
 
-      var i = 0;
+      var i = Object.keys(tickers).length - 1;
       for (var ticker in tickers) {
         sets.push({
           label: ticker,
@@ -60,7 +60,7 @@ const getDataForType = function(type, tickers, labels) {
           data: prepData(type, ticker, tickers, labels)
         });
 
-        i++;
+        i--;
       }
 
       return sets;

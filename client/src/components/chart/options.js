@@ -20,7 +20,6 @@ const colorize = function() {
 
 const scales = {
   x: {
-    reverse: true,
     ticks: {
       align: 'center',
       color: colors.purple1

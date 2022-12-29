@@ -146,17 +146,27 @@ var helpers = {
 
     return parsed;
   },
+  reverseData: function(data) {
+    var reversed = [];
+
+    data.map(function(entry) {
+      reversed.unshift(entry);
+    })
+
+    return reversed;
+  },
   dataConvert: function(data, keys) {
     var converted = [];
 
     data.map(function(entry) {
-      var entryData = [];
+      var change       = (entry.close/entry.open) - 1;
+      var vwapOverOpen = entry.vwap/entry.open;
 
-      keys.map(function(key) {
-        entryData.push(entry[key]);
-      })
+      var config = [entry.open, entry.high, entry.low];
 
-      converted.unshift(entryData);
+      var entryData = config;
+
+      converted.push(entryData);
     })
 
     return converted;

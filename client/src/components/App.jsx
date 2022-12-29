@@ -28,7 +28,7 @@ const App = function() {
 
       <div className='interface h'>
         <Interface setData={setData}/>
-        <Brain data={data}/>
+        <Brain data={helpers.reverseData(data)}/>
       </div>
 
       <Data data={data}/>

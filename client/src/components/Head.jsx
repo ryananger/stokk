@@ -2,7 +2,7 @@ import React from 'react';
 import Brain from './Brain.jsx';
 import ax from '../ax.js';
 
-const Head = function({data, toggle, running, setView}) {
+const Head = function({toggle, running}) {
   var runButton = function() {
     toggle(!running);
   };

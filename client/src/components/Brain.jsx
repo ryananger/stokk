@@ -7,7 +7,12 @@ import Draw from './chart/Draw.jsx';
 
 import testData from './chart/testData.js';
 
-const net = new brain.recurrent.LSTMTimeStep();
+const net = new brain.recurrent.LSTMTimeStep({
+  inputSize: 3,
+  hiddenLayers: [20, 10, 5],
+  outputSize: 3,
+});
+
 const Brain = function({data, setVis}) {
   const [netJSON, setNetJSON] = useState(null);
   const [loaded, netLoaded]   = useState(false);
@@ -18,7 +23,7 @@ const Brain = function({data, setVis}) {
       return;
     }
 
-    var trainingData = helpers.dataConvert(data, ['open', 'high', 'vwap']);
+    var trainingData = helpers.dataConvert(data);
     var options = {
       iterations: 5000,
       log: true,
@@ -26,7 +31,7 @@ const Brain = function({data, setVis}) {
       errorThresh: 0.01
     };
 
-    console.log('Training on set: ', trainingData);
+    console.log(`Training on ${trainingData.length} entries.`);
     net.train([trainingData], options);
 
     let json = JSON.stringify(net.toJSON());
@@ -40,35 +45,35 @@ const Brain = function({data, setVis}) {
       return;
     }
 
-    // TODO: separate testing and save different nets via ax request
-    var testingData = helpers.dataConvert(data, ['open', 'high', 'vwap']);
-    let test = testingData.slice(0, 20);
+    let testingData = data.slice(0, 20);
+    let test = helpers.dataConvert(testingData);
 
     let ran = net.run(test);
+    let exp = data[test.length];
 
+    let info = {rOpen: ran[0], eOpen: exp.open, rClose: ran[1], eClose: exp.close};
     let result = [];
-    let expected = testingData[test.length + 1];
 
     ran.map(function(val) {
       result.push(helpers.trunc(val));
     })
 
-    console.log('Result: ', result, 'Expected: ', expected);
+    console.log(`Result for ${exp.date}: `);
+    console.log('Open:  ', ran[0], 'Expected open:  ',  exp.open);
+    console.log('Close: ', ran[1], 'Expected close: ', exp.close);
 
-    let forecast = net.forecast(test, 15);
-    result = [];
+    let forecast = net.forecast(test, 5);
+    let expected = data.slice(20, 25);
 
-    forecast.map(function(prediction) {
+    forecast.map(function(prediction, i) {
       var p = [];
 
       prediction.map(function(val) {
         p.push(helpers.trunc(val));
       })
 
-      result.push(p);
+      console.log(`Forecast for ${expected[i].date}: `, p, expected[i].open);
     })
-
-    console.log('Forecast: ', result);
   };
 
   var getNetJSON = function() {
@@ -79,6 +84,12 @@ const Brain = function({data, setVis}) {
       netLoaded(true);
 
       console.log('Neural Network loaded: ', net);
+    }
+  };
+
+  var draw = function() {
+    if (data[0]) {
+      return <Draw data={data}/>
     }
   };
 
@@ -93,7 +104,7 @@ const Brain = function({data, setVis}) {
           <button className='brainButton' onClick={testBrain}>test</button>
         </div>
       </div>
-      <Draw data={data}/>
+      {draw()}
     </div>
   )
 }
