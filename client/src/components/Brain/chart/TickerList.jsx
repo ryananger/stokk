@@ -6,6 +6,18 @@ const TickerList = function({tickers}) {
   var render = function() {
     var rendered = [];
 
+    rendered.push(
+      <div key='listLabels' className='ticker h'>
+        <div className='tickerKey'>ticker</div>
+        <div className='tickerKey'>date</div>
+        <div className='tickerKey'>open</div>
+        <div className='tickerKey'>close</div>
+        <div className='tickerKey'>high</div>
+        <div className='tickerKey'>low</div>
+        <div className='tickerKey'>volume</div>
+      </div>
+    );
+
     for (var key in tickers) {
       var mostRecent = tickers[key][0];
 

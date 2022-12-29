@@ -10,7 +10,7 @@ const getMonthName = function(monthNumber) {
 const smallDate = function(dateString) {
   var date = new Date(dateString);
   var month = getMonthName(date.getMonth() + 1);
-  var day = date.getDate();
+  var day = date.getDate() + 1;
 
   return `${month} ${day}`;
 };
