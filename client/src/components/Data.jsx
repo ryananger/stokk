@@ -32,8 +32,14 @@ const Data = function({data}) {
     var rendered = [];
 
     data.map(function(entry, i) {
+      var tag = '';
+
+      if (i % 2 === 0) {
+        tag = 'alt'
+      }
+
       rendered.push((
-        <div key={i} className='entry h'>
+        <div key={i} className={`entry ${tag} h`}>
           <div className='entryKey'>{entry.ticker}</div>
           <div className='entryKey'>{entry.date}</div>
           <div className='entryKey'>{helpers.trunc(entry.open)}</div>

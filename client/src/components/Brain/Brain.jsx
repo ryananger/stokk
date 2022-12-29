@@ -5,6 +5,7 @@ import * as brain from 'brain.js';
 import {saveAs} from 'file-saver';
 
 import Draw from './chart/Draw.jsx';
+import br from './useBrain.js';
 import testData from './chart/testData.js';
 
 const net = new brain.recurrent.LSTMTimeStep({
@@ -23,7 +24,7 @@ const Brain = function({data, setVis}) {
       return;
     }
 
-    var trainingData = helpers.dataConvert(data);
+    var trainingData = br.dataConvert(data);
     var options = {
       iterations: 5000,
       log: true,
@@ -46,12 +47,11 @@ const Brain = function({data, setVis}) {
     }
 
     let testingData = data.slice(0, 20);
-    let test = helpers.dataConvert(testingData);
+    let test = br.dataConvert(testingData);
 
     let ran = net.run(test);
     let exp = data[test.length];
 
-    let info = {rOpen: ran[0], eOpen: exp.open, rClose: ran[1], eClose: exp.close};
     let result = [];
 
     ran.map(function(val) {
