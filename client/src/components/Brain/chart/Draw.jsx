@@ -13,8 +13,10 @@ import {
 } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
 
+import TickerList from './TickerList.jsx';
 import options from './options.js';
 import ch from './chart.js';
+import helpers from '../../../helpers.js';
 
 ChartJS.register(
   LinearScale,
@@ -28,21 +30,27 @@ ChartJS.register(
 );
 
 const Draw = function({data, queried}) {
-  const tickers = ch.getTickers(data);
-  const first   = Object.keys(tickers)[0];
-  const labels  = ch.getLabels(tickers[first]);
+  var render = function() {
+    if (queried[0]) {
+      const tickers = ch.getTickers(data);
+      const first   = Object.keys(tickers)[0];
+      const labels  = ch.getLabels(tickers[first]);
 
-  var renderChart = function() {
-    if (data.length > 60 || Object.keys(tickers).length > 1) {
-      return <Line options={options.line} data={ch.getDataForType('line', tickers, labels)}/>
+      if (data.length > 60 || Object.keys(tickers).length > 1) {
+        return <Line options={options.line} data={ch.getDataForType('line', tickers, labels)}/>
+      } else {
+        return <Bar  options={options.bar}  data={ch.getDataForType('bar',  tickers, labels)}/>
+      }
     } else {
-      return <Bar  options={options.bar}  data={ch.getDataForType('bar',  tickers, labels)}/>
+      const tickers = ch.getTickers(helpers.reverseData(data));
+
+      return <TickerList tickers={tickers}/>
     }
   };
 
   return (
     <div className='chartContainer'>
-      {renderChart()}
+      {render()}
     </div>
   )
 }

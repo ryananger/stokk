@@ -29,7 +29,7 @@ var ax = {
   },
   handleData: function(data, date) {
     if (data.resultsCount > 0) {
-      var results = helpers.parseData(date, data.results);
+      var results = ax.parseData(date, data.results);
 
       var chunks = [];
       var chunk  = [];
@@ -63,7 +63,28 @@ var ax = {
       })
     };
   },
+  parseData: function(date, data) {
+    var parsed = [];
 
+    data.map(function(entry, i) {
+      var stock = {};
+
+      stock.ticker = entry.T;
+      stock.date   = date;
+
+      stock.open   = entry.o;
+      stock.close  = entry.c;
+      stock.high   = entry.h;
+      stock.low    = entry.l;
+
+      stock.volume = entry.v;
+      stock.vwap   = entry.vw;
+
+      parsed.push(stock);
+    })
+
+    return parsed;
+  },
   getTickers: function(filter, sortBy, setData, cb) {
     if (Object.keys(filter).length === 0) {
       alert('Request must not be empty.');
@@ -88,6 +109,7 @@ var ax = {
   getNet: function(set) {
     axios.get(urlBase + 'net')
       .then(function(response) {
+        console.clear();
         if (typeof response.data === 'string') {
           console.log(response.data);
           return;

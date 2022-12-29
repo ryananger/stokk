@@ -7,6 +7,14 @@ const getMonthName = function(monthNumber) {
   return date.toLocaleString([], {month: 'long'}).slice(0, 3);
 };
 
+const smallDate = function(dateString) {
+  var date = new Date(dateString);
+  var month = getMonthName(date.getMonth() + 1);
+  var day = date.getDate();
+
+  return `${month} ${day}`;
+};
+
 const getTickers = function(data) {
   let tickers = {};
 
@@ -100,6 +108,7 @@ const prepData = function(type, set, tickers, labels) {
 };
 
 const chart = {
+  smallDate,
   getTickers,
   getLabels,
   getDataForType,

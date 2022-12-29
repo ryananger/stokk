@@ -132,7 +132,12 @@ const Interface = function({data, queried, setData, setQueried}) {
     var infos = {
       default: (
           <div className='defaultInfo'>
-            {dataInfo()}
+            <div className='infoHead h'>
+              info
+            </div>
+            <div className='infoContainer v'>
+              {dataInfo()}
+            </div>
           </div>
         ),
       search: (
@@ -160,9 +165,15 @@ const Interface = function({data, queried, setData, setQueried}) {
 
   var dataInfo = function() {
     if (!data[0]) {
-      return 'Query the database below to get stock data.'
+      return (
+        <div>
+          Welcome!
+          <br/><br/>
+          Query the database below to retrieve stock data.
+        </div>
+      )
     } else {
-      return `Found ${data.length} entries.`
+      return `Displaying ${data.length} entries.`
     }
   };
 

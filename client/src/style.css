@@ -69,10 +69,27 @@ h1, h2, h3 {
 .defaultInfo {
   border: 1px solid rgb(95, 67, 104);
   height: 100%;
-  padding: 6px;
-  padding-left: 12px;
 
   color:rgb(134 100 145);
+}
+
+.infoHead {
+  border: 1px solid rgb(95, 67, 104);
+  border-style: none none solid none;
+  padding-left: 8px;
+}
+
+.infoContainer {
+  padding: 4px;
+  padding-left: 8px;
+}
+
+.smallButton {
+  background-color: rgb(95, 67, 104);
+  width: 12px;
+  height: 12px;
+  border-radius: 12px;
+  margin: 6px;
 }
 
 .searchInfo {
@@ -178,6 +195,7 @@ input[type="radio"]:checked {
   margin-left: 0;
   margin-right: 0;
   width: 72%;
+  height: 500px;
   text-align: center;
   justify-content: space-between;
 }
@@ -187,6 +205,22 @@ input[type="radio"]:checked {
   width: 98%;
   height: 90%;
   align-self: center;
+  padding-bottom: 4px;
+}
+
+.tickerList {
+  height: 100%;
+  overflow: overlay;
+  color: rgb(134 100 145);
+}
+
+.ticker {
+  border: 1px solid rgb(80, 57, 87);
+  border-style: none none solid none;
+  padding: 4px;
+  padding-bottom: 1px;
+  padding-top: 10px;
+  width: 95%;
 }
 
 .brainHeader {
@@ -258,7 +292,7 @@ canvas {
   background-color: rgb(80, 57, 87);
 }
 
-.tableKey, .entryKey {
+.tableKey, .entryKey, .tickerKey {
   width: 10%;
 }
 

@@ -118,28 +118,6 @@ var helpers = {
     return newDate;
   },
 
-  parseData: function(date, data) {
-    var parsed = [];
-
-    data.map(function(entry, i) {
-      var stock = {};
-
-      stock.ticker = entry.T;
-      stock.date   = date;
-
-      stock.open   = entry.o;
-      stock.close  = entry.c;
-      stock.high   = entry.h;
-      stock.low    = entry.l;
-
-      stock.volume = entry.v;
-      stock.vwap   = entry.vw;
-
-      parsed.push(stock);
-    })
-
-    return parsed;
-  },
   reverseData: function(data) {
     var reversed = [];
 
@@ -176,7 +154,5 @@ helpers.startDate = {
   month: dateString.slice(5, 7),
   day:   dateString.slice(8)
 };
-
-console.log('Last date checked: ', helpers.startDate);
 
 export default helpers;

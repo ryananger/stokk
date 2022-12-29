@@ -89,7 +89,7 @@ const Brain = function({data, queried}) {
   };
 
   var draw = function() {
-    if (data[0] && queried[0]) {
+    if (data[0]) {
       return <Draw data={data} queried={queried}/>
     }
   };
