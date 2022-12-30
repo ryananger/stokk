@@ -10,13 +10,21 @@ import Draw     from './chart/Draw.jsx';
 
 const net = new brain.recurrent.LSTMTimeStep({
   inputSize: 3,
-  hiddenLayers: [20, 10, 5],
+  hiddenLayers: [10, 10],
   outputSize: 3,
 });
 
 const Brain = function({data, queried}) {
   const [netJSON, setNetJSON] = useState(null);
   const [loaded, netLoaded]   = useState(false);
+  const options = {
+      iterations: 5000,
+      log: true,
+      logPeriod: 1000,
+      errorThresh: 0.01
+    };
+
+  const datasets = br.dataSplit(data, queried);
 
   var trainBrain = function() {
     if (data.length === 0) {
@@ -24,20 +32,16 @@ const Brain = function({data, queried}) {
       return;
     }
 
-    var trainingData = br.dataConvert(data);
-    var options = {
-      iterations: 5000,
-      log: true,
-      logPeriod: 1000,
-      errorThresh: 0.01
-    };
+    for (var ticker in datasets) {
+      var trainingData = br.dataConvert(datasets[ticker]);
 
-    console.log(`Training on ${trainingData.length} entries.`);
-    net.train([trainingData], options);
+      console.log(`Training on ${trainingData.length} entries for ticker ${ticker}.`);
+      net.train([trainingData], options);
+    }
 
-    let json = JSON.stringify(net.toJSON());
-    let file = new Blob([json], {type: "text/plain;charset=utf-8"});
-    saveAs(file, "net.txt");
+    // let json = JSON.stringify(net.toJSON());
+    // let file = new Blob([json], {type: "text/plain;charset=utf-8"});
+    // saveAs(file, "net.txt");
   };
 
   var testBrain = function() {
@@ -46,35 +50,39 @@ const Brain = function({data, queried}) {
       return;
     }
 
-    let testingData = data.slice(0, 20);
-    let test = br.dataConvert(testingData);
+    for (var ticker in datasets) {
+      let set = datasets[ticker];
 
-    let ran = net.run(test);
-    let exp = data[test.length];
+      let testingData = set.slice(0, 20);
+      let test = br.dataConvert(testingData);
 
-    let result = [];
+      let ran = net.run(test);
+      let exp = set[test.length];
 
-    ran.map(function(val) {
-      result.push(helpers.trunc(val));
-    })
+      let result = [];
 
-    console.log(`Result for ${exp.date}: `);
-    console.log('Open:   ', ran[0], 'Expected open:   ',  exp.open);
-    console.log('Close:  ', ran[1], 'Expected close:  ', exp.close);
-    console.log('Change: ', ((ran[1] - ran[0])/ran[0]) * 100, 'Expected change: ', ((exp.close - exp.open)/exp.open) * 100)
-
-    let forecast = net.forecast(test, 15);
-    let expected = data.slice(20, 35);
-
-    forecast.map(function(prediction, i) {
-      var p = [];
-
-      prediction.map(function(val) {
-        p.push(helpers.trunc(val));
+      ran.map(function(val) {
+        result.push(helpers.trunc(val));
       })
 
-      console.log(`Forecast for ${expected[i].date}: `, p, expected[i].open);
-    })
+      console.log(`Result for ${exp.date}: `);
+      console.log('Open:   ', ran[0], 'Expected open:   ',  exp.open);
+      console.log('Close:  ', ran[1], 'Expected close:  ', exp.close);
+      console.log('Change: ', ((ran[1] - ran[0])/ran[0]) * 100, 'Expected change: ', ((exp.close - exp.open)/exp.open) * 100)
+
+      let forecast = net.forecast(test, 5);
+      let expected = set.slice(20, 35);
+
+      forecast.map(function(prediction, i) {
+        var p = [];
+
+        prediction.map(function(val) {
+          p.push(helpers.trunc(val));
+        })
+
+        console.log(`Forecast for ${expected[i].date}: `, p, expected[i].open);
+      })
+    }
   };
 
   var getNetJSON = function() {

@@ -29,7 +29,14 @@ const Form = function({setData, setQueried}) {
 
         if (key === 'ticker') {
           val = val.toUpperCase();
-          queriedTickers.push(val);
+
+          var split = val.replaceAll(' ', '').split(',');
+
+          split.map(function(ticker) {
+            queriedTickers.push(ticker);
+          })
+
+          console.log(queriedTickers)
           validForm = true;
         }
 
@@ -43,7 +50,7 @@ const Form = function({setData, setQueried}) {
       return;
     }
 
-    console.log(filter)
+    console.log('Query filter: ', filter)
 
     var cb = function() {
       setQueried(queriedTickers);

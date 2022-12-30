@@ -1,3 +1,17 @@
+var dataSplit = function(data, sets) {
+  var split = {};
+
+  sets.map(function(ticker) {
+    split[ticker] = [];
+  });
+
+  data.map(function(entry) {
+    split[entry.ticker].push(entry);
+  })
+
+  return split;
+};
+
 var dataConvert = function(data, keys) {
   var converted = [];
 
@@ -16,7 +30,8 @@ var dataConvert = function(data, keys) {
 };
 
 var useBrain = {
-  dataConvert: dataConvert
+  dataConvert: dataConvert,
+  dataSplit: dataSplit
 };
 
 export default useBrain;
