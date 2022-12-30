@@ -10,7 +10,7 @@ const Info = function({data, infoView, toggleInfo}) {
       default: (
           <div className='defaultInfo'>
             <div className='infoHead h'>
-              info
+              lists
             </div>
             <div className='infoContainer v'>
               {dataInfo()}
@@ -50,7 +50,7 @@ const Info = function({data, infoView, toggleInfo}) {
         </div>
       )
     } else {
-      return `Displaying ${data.length} entries.`
+      return `Found ${data.length} entries that meet the search criteria.`
     }
   };
 

@@ -23,11 +23,6 @@ input, select, button {
   outline: none;
 }
 
-select {
-  width: 164px;
-  margin-left: 16px;
-}
-
 input[type="submit"], button {
   width: 100%;
   padding: 4px;
@@ -42,6 +37,16 @@ input[type="submit"], button {
 
 input[type="submit"]:active {
   box-shadow: none;
+}
+
+input[type="text"], input[type='date'], select {
+  width: 60%;
+  min-width: 50px;
+}
+
+select {
+  box-sizing: content-box;
+  margin-left: 16px;
 }
 
 input[type="radio"] {

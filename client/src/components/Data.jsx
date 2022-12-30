@@ -28,10 +28,6 @@ const Data = function({data}) {
   };
 
   var renderData = function() {
-    if (!data[0]) {
-      return;
-    }
-
     var rendered = [];
 
     // TODO: this only shows page 0, no options to switch pages.
@@ -58,6 +54,10 @@ const Data = function({data}) {
 
     return rendered;
   };
+
+  if (!data[0]) {
+    return;
+  }
 
   return (
     <div id='dataRender'>

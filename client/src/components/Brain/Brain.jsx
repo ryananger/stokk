@@ -24,7 +24,13 @@ const Brain = function({data, queried}) {
       errorThresh: 0.01
     };
 
-  const datasets = br.dataSplit(data, queried);
+  const datasets = function() {
+    if (!queried[0]) {
+      return data;
+    } else {
+      return br.dataSplit(data, queried);
+    }
+  }();
 
   var trainBrain = function() {
     if (data.length === 0) {
@@ -39,6 +45,7 @@ const Brain = function({data, queried}) {
       net.train([trainingData], options);
     }
 
+    console.log('Training complete.');
     // let json = JSON.stringify(net.toJSON());
     // let file = new Blob([json], {type: "text/plain;charset=utf-8"});
     // saveAs(file, "net.txt");
@@ -67,11 +74,10 @@ const Brain = function({data, queried}) {
 
       console.log(`Result for ${exp.date}: `);
       console.log('Open:   ', ran[0], 'Expected open:   ',  exp.open);
-      console.log('Close:  ', ran[1], 'Expected close:  ', exp.close);
-      console.log('Change: ', ((ran[1] - ran[0])/ran[0]) * 100, 'Expected change: ', ((exp.close - exp.open)/exp.open) * 100)
+      console.log('High:  ', ran[1], 'Expected high:  ', exp.close);
 
       let forecast = net.forecast(test, 5);
-      let expected = set.slice(20, 35);
+      let expected = set.slice(20, 25);
 
       forecast.map(function(prediction, i) {
         var p = [];

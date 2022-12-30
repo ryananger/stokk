@@ -36,7 +36,6 @@ const Form = function({setData, setQueried}) {
             queriedTickers.push(ticker);
           })
 
-          console.log(queriedTickers)
           validForm = true;
         }
 

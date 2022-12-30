@@ -19,7 +19,7 @@ var dataConvert = function(data, keys) {
     var change       = (entry.close/entry.open) - 1;
     var vwapOverOpen = entry.vwap/entry.open;
 
-    var config = [entry.open, entry.high, entry.low];
+    var config = [entry.open, entry.high, entry.vwap];
 
     var entryData = config;
 
