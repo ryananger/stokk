@@ -9,9 +9,9 @@ import testData from './chart/testData.js';
 import Draw     from './chart/Draw.jsx';
 
 const net = new brain.recurrent.LSTMTimeStep({
-  inputSize: 3,
-  hiddenLayers: [10, 10],
-  outputSize: 3,
+  inputSize: 1,
+  hiddenLayers: [20, 20],
+  outputSize: 1,
 });
 
 const Brain = function({data, queried}) {
@@ -21,7 +21,7 @@ const Brain = function({data, queried}) {
   const options = {
       iterations: 5000,
       log: true,
-      logPeriod: 1000,
+      logPeriod: 100,
       errorThresh: 0.01
     };
 
@@ -61,34 +61,26 @@ const Brain = function({data, queried}) {
     for (var ticker in datasets) {
       let set = datasets[ticker];
 
-      let testingData = set.slice(0, 20);
-      let test = br.dataConvert(testingData);
+      for (var i = 0; i < 10; i++) {
+        let testingData = set.slice(i, i + 20);
+        let test = br.dataConvert(testingData);
+        let start = testingData[0];
 
-      let ran = net.run(test);
-      let exp = set[test.length];
+        let ran = net.run(test);
+        let exp = set[i + test.length];
 
-      let result = [];
+        let result = [];
 
-      ran.map(function(val) {
-        result.push(helpers.trunc(val));
-      })
+        ran.map(function(val) {
+          result.push(helpers.trunc(val));
+        })
 
-      console.log(`Result for ${exp.date}: `);
-      console.log('Open:   ', ran[0], 'Expected open:   ',  exp.open);
-      console.log('High:  ', ran[1], 'Expected high:  ', exp.close);
-
-      // let forecast = net.forecast(test, 5);
-      // let expected = set.slice(20, 25);
-
-      // forecast.map(function(prediction, i) {
-      //   var p = [];
-
-      //   prediction.map(function(val) {
-      //     p.push(helpers.trunc(val));
-      //   })
-
-      //   console.log(`Forecast for ${expected[i].date}: `, p, expected[i].open);
-      // })
+        console.log('-----');
+        console.log(`Result for ${exp.ticker} on ${exp.date}: `);
+        console.log('Predicted open: ', helpers.trunc(ran[0]) * start.open);
+        console.log('Expected open:  ', exp.open);
+        //console.log('High:  ', helpers.trunc(ran[1]), 'Expected high:  ', exp.high);
+      }
     }
   };
 

@@ -14,12 +14,13 @@ var dataSplit = function(data, sets) {
 
 var dataConvert = function(data, keys) {
   var converted = [];
+  var start = data[0];
 
   data.map(function(entry) {
     var change       = (entry.close/entry.open) - 1;
     var vwapOverOpen = entry.vwap/entry.open;
 
-    var config = [entry.open, entry.high, entry.vwap];
+    var config = [entry.open/start.open];
 
     var entryData = config;
 

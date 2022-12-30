@@ -1,0 +1,4 @@
+Error query handling.
+No results from DB handling.
+List implementation.
+TickerList interaction.
