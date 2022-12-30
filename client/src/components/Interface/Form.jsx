@@ -126,7 +126,7 @@ const Form = function({setData, setQueried}) {
   };
 
   return (
-      <form id='searchForm' onSubmit={handleSubmit} autoComplete='off'>
+      <form onSubmit={handleSubmit} autoComplete='off'>
         {renderForm()}
         <input type='submit' value='Search'/>
       </form>

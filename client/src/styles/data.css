@@ -1,0 +1,35 @@
+#dataRender {
+  width: 90vw;
+  max-width: 1100px;
+}
+
+#dataTable {
+  max-height: 92vh;
+  overflow: overlay;
+  overflow-x: hidden;
+}
+
+#dataTable::-webkit-scrollbar {
+  border: 1px solid rgb(104, 72, 112);
+  width: 1vi;
+}
+
+.tableKey, .entryKey {
+  width: 10%;
+}
+
+.entry, .keys {
+  width: 100%;
+  padding: 2px;
+  padding-left: 12px;
+}
+
+.alt {
+  background-color: rgba(104, 72, 112, 0.2);
+}
+
+hr {
+  margin-left: -1%;
+  width: 102%;
+  border: 1px solid rgb(230, 195, 130);
+}

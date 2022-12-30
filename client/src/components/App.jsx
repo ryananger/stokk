@@ -2,7 +2,6 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import ax      from './util/ax.js';
 import helpers from './util/helpers.js';
-import '../style.css';
 
 import Interface from './Interface/Interface.jsx';
 import Brain from './Brain/Brain.jsx';
