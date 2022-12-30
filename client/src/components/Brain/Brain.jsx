@@ -17,6 +17,7 @@ const net = new brain.recurrent.LSTMTimeStep({
 const Brain = function({data, queried}) {
   const [netJSON, setNetJSON] = useState(null);
   const [loaded, netLoaded]   = useState(false);
+
   const options = {
       iterations: 5000,
       log: true,
@@ -76,24 +77,22 @@ const Brain = function({data, queried}) {
       console.log('Open:   ', ran[0], 'Expected open:   ',  exp.open);
       console.log('High:  ', ran[1], 'Expected high:  ', exp.close);
 
-      let forecast = net.forecast(test, 5);
-      let expected = set.slice(20, 25);
+      // let forecast = net.forecast(test, 5);
+      // let expected = set.slice(20, 25);
 
-      forecast.map(function(prediction, i) {
-        var p = [];
+      // forecast.map(function(prediction, i) {
+      //   var p = [];
 
-        prediction.map(function(val) {
-          p.push(helpers.trunc(val));
-        })
+      //   prediction.map(function(val) {
+      //     p.push(helpers.trunc(val));
+      //   })
 
-        console.log(`Forecast for ${expected[i].date}: `, p, expected[i].open);
-      })
+      //   console.log(`Forecast for ${expected[i].date}: `, p, expected[i].open);
+      // })
     }
   };
 
-  var getNetJSON = function() {
-    ax.getNet(setNetJSON);
-
+  var loadNet = function() {
     if (netJSON && !loaded) {
       net.fromJSON(netJSON);
       netLoaded(true);
@@ -102,24 +101,33 @@ const Brain = function({data, queried}) {
     }
   };
 
-  var draw = function() {
+  var renderDraw = function() {
     if (data[0]) {
       return <Draw data={data} queried={queried}/>
     }
   };
 
-  useEffect(getNetJSON, [netJSON]);
+  var renderButtons = function() {
+    if (queried[0]) {
+      return (
+        <div className='brainButtons h'>
+          <button className='brainButton' onClick={trainBrain}>train</button>
+          <button className='brainButton' onClick={testBrain}>test</button>
+        </div>
+      )
+    }
+  };
+
+  useEffect(loadNet, [netJSON]);
+  useEffect(()=>{ax.getNet(setNetJSON)}, [])
 
   return (
     <div className='visualContainer v'>
       <div className='brainHeader h'>
         <h3>brain</h3>
-        <div className='brainButtons h'>
-          <button className='brainButton' onClick={trainBrain}>train</button>
-          <button className='brainButton' onClick={testBrain}>test</button>
-        </div>
+        {renderButtons()}
       </div>
-      {draw()}
+      {renderDraw()}
     </div>
   )
 };

@@ -8,7 +8,6 @@
 .defaultInfo {
   border: 1px solid rgb(95, 67, 104);
   height: 100%;
-
   color:rgb(181, 141, 190);
 }
 
@@ -28,6 +27,7 @@
   border: 1px solid rgb(95, 67, 104);
   border-style: none none solid none;
   padding-bottom: 10px;
+  padding-left: 8px;
 }
 
 .searchInfoButton {
@@ -45,8 +45,13 @@
   user-select: none;
 }
 
+.listInfoButton:hover {
+  color: rgb(230, 195, 130);
+}
+
 .dummyLabel {
   justify-content: flex-end;
   padding-bottom: 2px;
   margin: 2px;
+  margin-left: -8px;
 }

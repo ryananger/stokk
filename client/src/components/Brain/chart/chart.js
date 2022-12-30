@@ -2,6 +2,8 @@ import chroma from 'chroma-js';
 
 const getMonthName = function(monthNumber) {
   var date = new Date();
+
+  date.setDate(1);
   date.setMonth(monthNumber - 1);
 
   return date.toLocaleString([], {month: 'long'}).slice(0, 3);

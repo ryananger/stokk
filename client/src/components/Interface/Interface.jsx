@@ -10,12 +10,15 @@ const Interface = function({data, queried, setData, setQueried}) {
   const [sort, setSort] = useState('date');
   const [infoView, setInfo] = useState('default');
 
-  var toggleInfo = function() {
-    if (infoView !== 'search') {
-      setInfo('search');
-    } else {
+  var toggleInfo = function(e) {
+    var view = e.target.getAttribute('tag');
+
+    if (infoView === view) {
       setInfo('default');
+      return;
     }
+
+    setInfo(view);
   };
 
   return (
