@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import ch from './chart.js';
 
 const TickerList = function({tickers}) {
-
   var render = function() {
     var rendered = [];
 
@@ -24,6 +23,7 @@ const TickerList = function({tickers}) {
       rendered.push(
         <div key={mostRecent.ticker} className='ticker h'>
           <div className='tickerKey'><b>{mostRecent.ticker}</b></div>
+
           <div className='tickerKey'>{ch.smallDate(mostRecent.date)}</div>
           <div className='tickerKey'>{mostRecent.open}</div>
           <div className='tickerKey'>{mostRecent.close}</div>
@@ -35,7 +35,7 @@ const TickerList = function({tickers}) {
     }
 
     return rendered;
-  }
+  };
 
   return (
     <div className='tickerList'>

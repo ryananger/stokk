@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
-import ax from '../ax.js';
-import helpers from '../helpers.js';
+import ax      from '../util/ax.js';
+import helpers from '../util/helpers.js';
 
 const labels = helpers.labels;
 
-const Interface = function({data, queried, setData, setQueried}) {
+const Form = function({setData, setQueried}) {
   const [sort, setSort] = useState('date');
-  const [infoView, setInfo] = useState('default');
-
   var handleSubmit = function(e) {
     e.preventDefault();
 
@@ -95,7 +93,6 @@ const Interface = function({data, queried, setData, setQueried}) {
       if (label === 'ticker') {
         rendered.push(
           <label key={label + 'Label'} className='tickerLabel'>
-            <div className='searchInfoButton v' onMouseEnter={toggleInfo} onMouseLeave={toggleInfo}>i</div>
             <div className='formTag'>{label}:</div>
             <input type='radio' id={label + 'Radio'} checked={(sort === label)} onChange={sortChange}/>
             <input type='text' id={label}/>
@@ -128,75 +125,12 @@ const Interface = function({data, queried, setData, setQueried}) {
     return rendered;
   };
 
-  var renderInfo = function() {
-    var infos = {
-      default: (
-          <div className='defaultInfo'>
-            <div className='infoHead h'>
-              info
-            </div>
-            <div className='infoContainer v'>
-              {dataInfo()}
-            </div>
-          </div>
-        ),
-      search: (
-          <div className='searchInfo v'>
-            Click the button to sort query by that parameter.
-            <br/><br/>
-            Format comparisons like this:
-            <br/><br/>
-            <label className='dummyLabel'>
-              <div className='formTag'>open:</div>
-              <input type='radio' id='dummy1' checked={0} readOnly/>
-              <input type='text' value='>3, <=4' readOnly/>
-            </label>
-            <label className='dummyLabel'>
-              <div className='formTag'>close:</div>
-              <input type='radio' id='dummy2'checked readOnly/>
-              <input type='text' value='>4' readOnly/>
-            </label>
-          </div>
-        )
-    };
-
-    return infos[infoView];
-  };
-
-  var dataInfo = function() {
-    if (!data[0]) {
-      return (
-        <div>
-          Welcome!
-          <br/><br/>
-          Query the database below to retrieve stock data.
-        </div>
-      )
-    } else {
-      return `Displaying ${data.length} entries.`
-    }
-  };
-
-  var toggleInfo = function() {
-    if (infoView !== 'search') {
-      setInfo('search');
-    } else {
-      setInfo('default');
-    }
-  };
-
   return (
-    <div className='interLeft v'>
-      <div className='infoBox v'>
-        {renderInfo()}
-      </div>
-
       <form id='searchForm' onSubmit={handleSubmit} autoComplete='off'>
         {renderForm()}
         <input type='submit' value='Search'/>
       </form>
-    </div>
   )
 }
 
-export default Interface;
+export default Form;

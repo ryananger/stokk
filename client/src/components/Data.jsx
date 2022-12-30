@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import helpers from '../helpers.js';
+import helpers from './util/helpers.js';
 
 const labels = helpers.labels;
 
@@ -34,6 +34,7 @@ const Data = function({data}) {
 
     var rendered = [];
 
+    // TODO: this only shows page 0, no options to switch pages.
     pages[page].map(function(entry, i) {
       var tag = '';
 

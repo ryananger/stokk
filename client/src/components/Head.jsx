@@ -1,6 +1,6 @@
 import React from 'react';
 import Brain from './Brain/Brain.jsx';
-import ax from '../ax.js';
+import ax    from './util/ax.js';
 
 const Head = function({toggle, running}) {
   var runButton = function() {

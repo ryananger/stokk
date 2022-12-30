@@ -64,6 +64,7 @@ h1, h2, h3 {
   margin-bottom: 12px;
   height: 100%;
   justify-content: flex-start;
+  position: relative;
 }
 
 .defaultInfo {
@@ -95,18 +96,14 @@ h1, h2, h3 {
 .searchInfo {
   border: 1px solid rgb(95, 67, 104);
   border-style: none none solid none;
-  padding-bottom: 12px;
-}
-
-.tickerLabel {
-  position: relative;
+  padding-bottom: 10px;
 }
 
 .searchInfoButton {
   position: absolute;
 
   left: -10px;
-  top: 4px;
+  top: 200px;
   width: 16px;
   height: 16px;
   border-radius: 16px;

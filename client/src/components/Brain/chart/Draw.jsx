@@ -14,9 +14,9 @@ import {
 import { Bar, Line } from 'react-chartjs-2';
 
 import TickerList from './TickerList.jsx';
-import options from './options.js';
-import ch from './chart.js';
-import helpers from '../../../helpers.js';
+import options    from './options.js';
+import ch         from './chart.js';
+import helpers    from '../../util/helpers.js';
 
 ChartJS.register(
   LinearScale,

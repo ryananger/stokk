@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import ax from '../../ax.js';
-import helpers from '../../helpers.js';
 import * as brain from 'brain.js';
-import {saveAs} from 'file-saver';
+import {saveAs}   from 'file-saver';
 
-import Draw from './chart/Draw.jsx';
-import br from './useBrain.js';
+import ax       from '../util/ax.js';
+import br       from './useBrain.js';
+import helpers  from '../util/helpers.js';
 import testData from './chart/testData.js';
+import Draw     from './chart/Draw.jsx';
 
 const net = new brain.recurrent.LSTMTimeStep({
   inputSize: 3,
@@ -108,7 +108,7 @@ const Brain = function({data, queried}) {
       {draw()}
     </div>
   )
-}
+};
 
 export default Brain;
 
