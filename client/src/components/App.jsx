@@ -30,7 +30,7 @@ const App = function() {
 
       <div className='interface h'>
         <Interface data={reversed} queried={queried} setData={setData} setQueried={setQueried}/>
-        <Brain data={reversed} queried={queried}/>
+        <Brain     data={reversed} queried={queried} />
       </div>
 
       <Data data={data}/>

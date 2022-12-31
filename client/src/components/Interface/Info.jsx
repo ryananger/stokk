@@ -44,7 +44,7 @@ const Info = function({data, infoView, toggleInfo}) {
     var container = (
       <div className='defaultInfo'>
         <div className='infoHead h'>
-          <div className='listInfoButton' tag='lists' onMouseEnter={toggleInfo} onMouseLeave={toggleInfo}>lists</div>
+          <div className='listInfoButton' tag='lists' onMouseEnter={toggleInfo} onMouseLeave={toggleInfo}></div>
         </div>
         <div className='infoContainer v'>
           {infos[infoView]}
