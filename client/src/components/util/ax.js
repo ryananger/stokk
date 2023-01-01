@@ -68,8 +68,13 @@ var ax = {
 
     data.map(function(entry, i) {
       var stock = {};
+      var ticker = entry.T;
 
-      stock.ticker = entry.T;
+      if (!ax.validTicker(ticker)) {
+        return;
+      }
+
+      stock.ticker = ticker;
       stock.date   = date;
 
       stock.open   = entry.o;
@@ -84,6 +89,21 @@ var ax = {
     })
 
     return parsed;
+  },
+  validTicker: function(ticker) {
+    if (ticker.length > 4 && ticker[ticker.length - 1] === 'W') {
+      return false;
+    }
+
+    if (ticker.length > 4 && ticker.includes('WS') && ticker[ticker.length - 1] === 'S') {
+      return false;
+    }
+
+    if (ticker.includes('.') || ticker.includes('p')) {
+      return false;
+    }
+
+    return true;
   },
   getTickers: function(filter, sortBy, setData, cb) {
     if (Object.keys(filter).length === 0) {
@@ -102,8 +122,16 @@ var ax = {
           return;
         }
 
+        let onlyValid = [];
+
+        response.data.map(function(entry) {
+          if (ax.validTicker(entry.ticker) && entry.volume > 9999) {
+            onlyValid.push(entry);
+          }
+        })
+
         cb();
-        setData(response.data);
+        setData(onlyValid);
       })
   },
   getNet: function(set) {

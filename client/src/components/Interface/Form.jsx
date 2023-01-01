@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ax      from '../util/ax.js';
 import helpers from '../util/helpers.js';
 
@@ -6,6 +6,9 @@ const labels = helpers.labels;
 
 const Form = function({setData, setQueried}) {
   const [sort, setSort] = useState('date');
+  const [popup, togglePopup] = useState(false);
+  const [savedQueries, addQuery] = useState([]);
+
   var handleSubmit = function(e) {
     e.preventDefault();
 
@@ -131,11 +134,47 @@ const Form = function({setData, setQueried}) {
     return rendered;
   };
 
+  var saveQuery = function(e) {
+    var value = document.querySelector('#saveQuery').value;
+    var saved = savedQueries;
+
+    saved.unshift(value);
+
+    addQuery(saved);
+    togglePopup(!popup)
+  };
+
+  var renderPopup = function() {
+    if (popup) {
+      return (
+        <div className='plusPopup v'>
+          <input id='saveQuery' type='text' placeholder='Save query as...' autoComplete='off'/>
+          <button id='saveButton' onClick={saveQuery}>save</button>
+        </div>
+      )
+    }
+  };
+
+  var clearForm = function() {
+    var form = document.querySelector('#form');
+    form.reset();
+  };
+
+  useEffect(()=>{}, [popup])
+
   return (
-      <form onSubmit={handleSubmit} autoComplete='off'>
+    <div id='formContainer'>
+      <form id='form' onSubmit={handleSubmit} autoComplete='off'>
+        <div className='closeButton v' onClick={clearForm}><div className='ex'>x</div></div>
+        <div className='plusButton v'>
+          <div className='plus' onClick={()=>{togglePopup(!popup)}}>+</div>
+        </div>
         {renderForm()}
         <input type='submit' value='Search'/>
       </form>
+      {renderPopup()}
+    </div>
+
   )
 }
 

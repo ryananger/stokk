@@ -1,6 +1,9 @@
-form {
+
+#formContainer, form {
   display: flex;
   flex-direction: column;
+
+  position: relative;
 }
 
 label {
@@ -23,16 +26,86 @@ input, select, button {
   outline: none;
 }
 
+.plusButton, .closeButton {
+  background-color: rgb(104, 72, 112);
+  border: 1px solid rgba(230, 195, 130, 00);
+  /* border-radius: 16px; */
+
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  right: -22px;
+
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+
+  font-size: 16px;
+  font-weight: bolder;
+  user-select: none;
+}
+
+.plusButton:hover, .closeButton:hover {
+  border: 1px solid rgb(230, 195, 130);
+}
+
+.plus, .ex {
+  position: absolute;
+  top: -5px;
+}
+
+.plusButton {
+  top: 32px;
+}
+
+.plusPopup {
+  display: flex;
+  position: absolute;
+  right: -104px;
+  top: 54px;
+  width: 100px;
+  padding-left: 0px;
+}
+
+#saveQuery {
+  background-color: rgb(104, 72, 112);
+  height: 20px;
+  width: 100px;
+}
+
+#saveQuery::placeholder {
+  color:rgb(230, 195, 130)
+}
+
+#saveButton {
+  width: 50px;
+  font-size: 12px;
+  padding: 0;
+  box-shadow: none;
+  position: absolute;
+  right: -4px;
+  top: 12px;
+  height: 20px;
+}
+
+#saveButton:hover {
+  border: 1px solid rgb(230, 195, 130)
+}
+
+.closeButton {
+  top: 6px;
+}
+
 input[type="submit"], button {
   width: 100%;
   padding: 4px;
   margin-top: 12px;
-  border: 1px solid black;
+  border: none;
 
   font-size: 16px;
   font-weight: bold;
 
-  box-shadow: 0 1px 0px #201620a8;
+  box-shadow: 0 3px 2px #201620e3;
 }
 
 input[type="submit"]:active {
