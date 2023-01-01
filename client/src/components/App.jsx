@@ -12,9 +12,9 @@ const startDate  = helpers.startDate;
 
 const App = function() {
   const [data, setData]       = useState([]);
+  const [queried, setQueried] = useState([]);
   const [marketDate, setDate] = useState(startDate);
   const [running, toggle]     = useState(false);
-  const [queried, setQueried] = useState([]);
 
   const reversed = helpers.reverseData(data);
 

@@ -147,7 +147,7 @@ const Form = function({setData, setQueried}) {
   var renderPopup = function() {
     if (popup) {
       return (
-        <div className='plusPopup v'>
+        <div className='plusPopup h'>
           <input id='saveQuery' type='text' placeholder='Save query as...' autoComplete='off'/>
           <button id='saveButton' onClick={saveQuery}>save</button>
         </div>
@@ -160,6 +160,8 @@ const Form = function({setData, setQueried}) {
     form.reset();
 
     togglePopup(false);
+    setData([]);
+    setQueried([]);
   };
 
   useEffect(()=>{}, [popup])
