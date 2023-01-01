@@ -158,6 +158,8 @@ const Form = function({setData, setQueried}) {
   var clearForm = function() {
     var form = document.querySelector('#form');
     form.reset();
+
+    togglePopup(false);
   };
 
   useEffect(()=>{}, [popup])
