@@ -117,15 +117,15 @@ var ax = {
 
     axios.get(urlBase + 'tickers', {params: {filter, sort}})
       .then(function(response) {
-        if (typeof response.data === 'string') {
-          alert(response.data);
+        if (!response.data[0]) {
+          alert('No results found.');
           return;
         }
 
         let onlyValid = [];
 
         response.data.map(function(entry) {
-          if (ax.validTicker(entry.ticker) && entry.volume > 9999) {
+          if (entry.volume > 0) {
             onlyValid.push(entry);
           }
         })

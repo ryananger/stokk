@@ -4,17 +4,42 @@ import helpers from '../util/helpers.js';
 
 const labels = helpers.labels;
 
-const Form = function({setData, setQueried}) {
+const Form = function({setData, setQueried, savedQueries, addQuery}) {
   const [sort, setSort] = useState('date');
   const [popup, togglePopup] = useState(false);
-  const [savedQueries, addQuery] = useState([]);
 
   var handleSubmit = function(e) {
+    console.log(e);
     e.preventDefault();
 
     var form = e.target;
-    var filter = {};
+    var filter = validateForm();
+
+    if (!filter) {
+      return;
+    }
+
+
     var queriedTickers = [];
+
+    if (filter.ticker) {
+      var split = filter.ticker.replaceAll(' ', '').split(',');
+
+      split.map(function(ticker) {
+        queriedTickers.push(ticker);
+      })
+    }
+
+    var cb = function() {
+      setQueried(queriedTickers);
+    };
+
+    ax.getTickers(filter, sort, setData, cb);
+  };
+
+  var validateForm = function() {
+    var form = document.querySelector('#form');
+    var filter = {};
 
     var validForm = false;
     var numFields = 0;
@@ -30,35 +55,23 @@ const Form = function({setData, setQueried}) {
           validForm = true;
         }
 
-        if (key === 'ticker') {
-          val = val.toUpperCase();
-
-          var split = val.replaceAll(' ', '').split(',');
-
-          split.map(function(ticker) {
-            queriedTickers.push(ticker);
-          })
-
-          validForm = true;
-        }
-
         filter[key] = val;
       }
     })
 
+    if (filter.ticker) {
+      filter.ticker = filter.ticker.toUpperCase();
+      validForm = true;
+    }
 
     if (!validForm) {
       alert('Empty query. Query at least one ticker OR at least one number and date parameter.');
       return;
     }
 
-    console.log('Query filter: ', filter)
+    console.log('Query filter: ', filter);
 
-    var cb = function() {
-      setQueried(queriedTickers);
-    };
-
-    ax.getTickers(filter, sort, setData, cb);
+    return filter;
   };
 
   var sortChange = function(e) {
@@ -134,14 +147,20 @@ const Form = function({setData, setQueried}) {
     return rendered;
   };
 
-  var saveQuery = function(e) {
+  var saveQuery = function() {
+    var filter = validateForm();
+
+    if (!filter) {
+      return;
+    }
+
     var value = document.querySelector('#saveQuery').value;
     var saved = savedQueries;
 
-    saved.unshift(value);
+    saved.unshift({name: value, filter: filter});
 
     addQuery(saved);
-    togglePopup(!popup)
+    togglePopup(!popup);
   };
 
   var renderPopup = function() {

@@ -41,10 +41,6 @@ const Draw = function({data, queried}) {
       } else {
         return <Bar  options={options.bar}  data={ch.getDataForType('bar',  tickers, labels)}/>
       }
-    } else {
-      const tickers = ch.getTickers(helpers.reverseData(data));
-
-      return <TickerList tickers={tickers}/>
     }
   };
 

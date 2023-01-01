@@ -4,15 +4,6 @@ const controller = {
   postTickers: function(req, res) {
     Ticker.insertMany(req.body);
     res.send({posted: true, message: 'Posted.'});
-    // Ticker.find({date: req.body[0].date})
-    //   .then(function(results) {
-    //     if (results.length === 0) {
-    //       Ticker.insertMany(req.body);
-    //       res.send({posted: true, message: 'Posted.'});
-    //     } else {
-    //       res.send({posted: false, message: 'Already in database.'});
-    //     }
-    //   })
   },
   findTickers: function(filter, sort, res) {
     var sendBody = [];
@@ -40,7 +31,6 @@ const controller = {
           res.json(sendBody);
         })
     } else {
-      console.log(filter);
       Ticker.find(filter)
         .sort(sort)
         .then(function(tickers) {

@@ -28,7 +28,6 @@ app.get('/tickers', function(req, res) {
         let tickerString = query.ticker.replaceAll(' ', '');
         let tickers = tickerString.split(',');
 
-        console.log(tickers);
         filter.ticker = tickers;
         break;
       case 'dateEnd':
@@ -40,7 +39,7 @@ app.get('/tickers', function(req, res) {
     }
   }
 
-  console.log(filter)
+  console.log(filter);
 
   controller.findTickers(filter, sort, res);
 });

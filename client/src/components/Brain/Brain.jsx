@@ -5,7 +5,6 @@ import {saveAs}   from 'file-saver';
 import ax       from '../util/ax.js';
 import br       from './useBrain.js';
 import helpers  from '../util/helpers.js';
-import testData from './chart/testData.js';
 import Draw     from './chart/Draw.jsx';
 
 const net = new brain.recurrent.LSTMTimeStep({

@@ -4,7 +4,7 @@ import helpers from '../util/helpers.js';
 
 const labels = helpers.labels;
 
-const Info = function({data, infoView, toggleInfo}) {
+const Info = function({data, infoView, toggleInfo, savedQueries, savedLists}) {
   var renderInfo = function() {
     var infos = {
       default: (
@@ -14,7 +14,12 @@ const Info = function({data, infoView, toggleInfo}) {
         ),
       lists: (
         <div className='listInfo v'>
-          No lists available.
+          {renderSet('lists')}
+        </div>
+      ),
+      queries: (
+        <div className='queryInfo v'>
+          {renderSet('queries')}
         </div>
       ),
       search: (
@@ -44,7 +49,8 @@ const Info = function({data, infoView, toggleInfo}) {
     var container = (
       <div className='defaultInfo'>
         <div className='infoHead h'>
-          <div className='listInfoButton' tag='lists' onMouseEnter={toggleInfo} onMouseLeave={toggleInfo}></div>
+          <div className='listInfoButton' tag='lists' onMouseEnter={toggleInfo} onMouseLeave={toggleInfo}>lists</div>
+          <div className='listInfoButton' tag='queries' onClick={toggleInfo}>queries</div>
         </div>
         <div className='infoContainer v'>
           {infos[infoView]}
@@ -68,6 +74,34 @@ const Info = function({data, infoView, toggleInfo}) {
       return `Found ${data.length} entries that meet the search criteria.`
     }
   };
+
+  var renderSet = function(which) {
+    var set;
+
+    switch (which) {
+      case 'lists':
+        set = savedLists;
+        break;
+      case 'queries':
+        set = savedQueries;
+        break;
+    }
+
+    var rendered = [];
+    var onClick = function() {
+      load(which);
+    };
+
+    set.map(function(entry) {
+      rendered.push(<div className='infoEntry'>{entry.name}</div>)
+    });
+
+    if (!rendered[0]) {
+      return `No ${which} available.`
+    }
+
+    return rendered;
+  }
 
   return (
     <div className='infoBox v'>
