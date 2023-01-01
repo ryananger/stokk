@@ -4,7 +4,20 @@ import helpers from '../util/helpers.js';
 
 const labels = helpers.labels;
 
-const Info = function({data, infoView, toggleInfo, savedQueries, savedLists}) {
+const Info = function({data}) {
+  const st = window.state;
+
+  var toggleInfo = function(e) {
+    var view = e.target.getAttribute('tag');
+
+    if (st.infoView === view) {
+      st.setInfo('default');
+      return;
+    }
+
+    st.setInfo(view);
+  };
+
   var renderInfo = function() {
     var infos = {
       default: (
@@ -42,7 +55,7 @@ const Info = function({data, infoView, toggleInfo, savedQueries, savedLists}) {
       )
     };
 
-    if (infoView === 'search') {
+    if (st.infoView === 'search') {
       return infos.search;
     }
 
@@ -53,7 +66,7 @@ const Info = function({data, infoView, toggleInfo, savedQueries, savedLists}) {
           <div className='listInfoButton' tag='queries' onClick={toggleInfo}>queries</div>
         </div>
         <div className='infoContainer v'>
-          {infos[infoView]}
+          {infos[st.infoView]}
         </div>
       </div>
     );
@@ -80,10 +93,10 @@ const Info = function({data, infoView, toggleInfo, savedQueries, savedLists}) {
 
     switch (which) {
       case 'lists':
-        set = savedLists;
+        set = st.savedLists;
         break;
       case 'queries':
-        set = savedQueries;
+        set = st.savedQueries;
         break;
     }
 
@@ -93,7 +106,7 @@ const Info = function({data, infoView, toggleInfo, savedQueries, savedLists}) {
     };
 
     set.map(function(entry) {
-      rendered.push(<div className='infoEntry'>{entry.name}</div>)
+      rendered.push(<div key={entry.name} className='infoEntry'>{entry.name}</div>)
     });
 
     if (!rendered[0]) {
@@ -101,7 +114,7 @@ const Info = function({data, infoView, toggleInfo, savedQueries, savedLists}) {
     }
 
     return rendered;
-  }
+  };
 
   return (
     <div className='infoBox v'>

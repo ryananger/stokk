@@ -20,10 +20,12 @@ const options = {
   errorThresh: 0.01
 };
 
-const Brain = function({data, queried}) {
+const Brain = function({data}) {
   const [netJSON, setNetJSON] = useState(null);
   const [loaded, netLoaded]   = useState(false);
-  const [predictions, setPredictions] = useState([])
+  const [predictions, setPredictions] = useState([]);
+
+  const queried = window.state.queried;
 
   const datasets = function() {
     if (!queried[0]) {

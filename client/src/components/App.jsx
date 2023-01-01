@@ -11,26 +11,17 @@ import Data from './Data.jsx';
 const startDate  = helpers.startDate;
 
 const App = function() {
-  const [data, setData]       = useState([]);
-  const [queried, setQueried] = useState([]);
-  const [marketDate, setDate] = useState(startDate);
-  const [running, toggle]     = useState(false);
-
-  const reversed = helpers.reverseData(data);
-
-  useEffect(function() {
-    if (running) {
-      ax.polygonDataLoop(marketDate, setDate, toggle);
-    }
-  }, [marketDate, running]);
+  const st         = window.state;
+  const data       = st.data;
+  const reversed   = helpers.reverseData(data);
 
   return (
     <div id='app'>
-      <Head toggle={toggle} running={running}/>
+      <Head/>
 
       <div className='interface h'>
-        <Interface data={reversed} queried={queried} setData={setData} setQueried={setQueried}/>
-        <Brain     data={reversed} queried={queried} />
+        <Interface data={reversed}/>
+        <Brain     data={reversed}/>
       </div>
 
       <Data data={data}/>

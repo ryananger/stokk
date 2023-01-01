@@ -4,12 +4,11 @@ import helpers from '../util/helpers.js';
 
 const labels = helpers.labels;
 
-const Form = function({setData, setQueried, savedQueries, addQuery}) {
-  const [sort, setSort] = useState('date');
+const Form = function() {
+  const st = window.state;
   const [popup, togglePopup] = useState(false);
 
   var handleSubmit = function(e) {
-    console.log(e);
     e.preventDefault();
 
     var form = e.target;
@@ -18,7 +17,6 @@ const Form = function({setData, setQueried, savedQueries, addQuery}) {
     if (!filter) {
       return;
     }
-
 
     var queriedTickers = [];
 
@@ -31,10 +29,10 @@ const Form = function({setData, setQueried, savedQueries, addQuery}) {
     }
 
     var cb = function() {
-      setQueried(queriedTickers);
+      st.setQueried(queriedTickers);
     };
 
-    ax.getTickers(filter, sort, setData, cb);
+    ax.getTickers(filter, st.sort, st.setData, cb);
   };
 
   var validateForm = function() {
@@ -75,7 +73,7 @@ const Form = function({setData, setQueried, savedQueries, addQuery}) {
   };
 
   var sortChange = function(e) {
-    setSort(e.target.id.replace('Radio', ''));
+    st.setSort(e.target.id.replace('Radio', ''));
   };
 
   var setDate = function() {
@@ -99,7 +97,7 @@ const Form = function({setData, setQueried, savedQueries, addQuery}) {
         date.push(
           <label key='date'>
             <div className='formTag'>dates:</div>
-            <input type='radio' id='dateRadio' checked={(sort === 'date')} onChange={sortChange}/>
+            <input type='radio' id='dateRadio' checked={(st.sort === 'date')} onChange={sortChange}/>
             <input type='date' id='date' onChange={setDate}/>
           </label>
         )
@@ -116,7 +114,7 @@ const Form = function({setData, setQueried, savedQueries, addQuery}) {
         rendered.push(
           <label key={label + 'Label'} className='tickerLabel'>
             <div className='formTag'>{label}:</div>
-            <input type='radio' id={label + 'Radio'} checked={(sort === label)} onChange={sortChange}/>
+            <input type='radio' id={label + 'Radio'} checked={(st.sort === label)} onChange={sortChange}/>
             <input type='text' id={label}/>
           </label>
         )
@@ -127,7 +125,7 @@ const Form = function({setData, setQueried, savedQueries, addQuery}) {
       rendered.push(
         <label key={label + 'Label'}>
           <div className='formTag'>{label}:</div>
-          <input type='radio' id={label + 'Radio'} checked={(sort === label)} onChange={sortChange}/>
+          <input type='radio' id={label + 'Radio'} checked={(st.sort === label)} onChange={sortChange}/>
           <input type='text' id={label}/>
         </label>
       )
@@ -155,11 +153,11 @@ const Form = function({setData, setQueried, savedQueries, addQuery}) {
     }
 
     var value = document.querySelector('#saveQuery').value;
-    var saved = savedQueries;
+    var saved = st.savedQueries;
 
     saved.unshift({name: value, filter: filter});
 
-    addQuery(saved);
+    st.addQuery(saved);
     togglePopup(!popup);
   };
 
@@ -179,8 +177,8 @@ const Form = function({setData, setQueried, savedQueries, addQuery}) {
     form.reset();
 
     togglePopup(false);
-    setData([]);
-    setQueried([]);
+    st.setData([]);
+    st.setQueried([]);
   };
 
   useEffect(()=>{}, [popup])

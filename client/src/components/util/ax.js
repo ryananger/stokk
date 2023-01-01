@@ -4,20 +4,20 @@ import helpers from './helpers.js';
 var urlBase = `http://localhost:${process.env.PORT}/`;
 
 var ax = {
-  polygonDataLoop: function(date, setDate, toggle) {
+  polygonDataLoop: function(date, setDate, toggle, running) {
     var newDate = helpers.newDate(date);
     var dateString = document.cookie.slice(5);
 
     if (!newDate) {
       console.log('All dates found.');
       document.cookie = 'date=' + helpers.dateToString(date);
-      toggle(false);
+      toggle(!running);
       return;
     }
 
     axios.get(helpers.getURL(dateString))
       .then(function(response) {
-        ax.handleData(response.data, dateString);
+        //ax.handleData(response.data, dateString);
 
         console.log('GET data for ', dateString, response.data.resultsCount);
         document.cookie = 'date=' + helpers.dateToString(newDate);
@@ -106,6 +106,8 @@ var ax = {
     return true;
   },
   getTickers: function(filter, sortBy, setData, cb) {
+    const st = window.state;
+
     if (Object.keys(filter).length === 0) {
       alert('Request must not be empty.');
       return;
@@ -129,6 +131,8 @@ var ax = {
             onlyValid.push(entry);
           }
         })
+
+        console.log(onlyValid)
 
         cb();
         setData(onlyValid);
