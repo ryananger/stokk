@@ -9,8 +9,8 @@ const State = function() {
   // Interface
   const [sort, setSort] = useState('date');
   const [infoView, setInfo] = useState('default');
-  const [savedQueries, addQuery] = useState([]);
-  const [savedLists, setLists] = useState([]);
+  const [savedQueries, saveQuery] = useState([]);
+  const [savedLists, saveList] = useState([]);
 
   const state = {
     data,
@@ -23,9 +23,9 @@ const State = function() {
     infoView,
     setInfo,
     savedQueries,
-    addQuery,
+    saveQuery,
     savedLists,
-    setLists
+    saveList
   };
 
   window.state = state;

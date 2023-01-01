@@ -132,8 +132,6 @@ var ax = {
           }
         })
 
-        console.log(onlyValid)
-
         cb();
         setData(onlyValid);
       })

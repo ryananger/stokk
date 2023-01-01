@@ -157,7 +157,7 @@ const Form = function() {
 
     saved.unshift({name: value, filter: filter});
 
-    st.addQuery(saved);
+    st.saveQuery(saved);
     togglePopup(!popup);
   };
 
