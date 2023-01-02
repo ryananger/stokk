@@ -4,7 +4,7 @@ import helpers from '../util/helpers.js';
 
 const labels = helpers.labels;
 
-const Form = function({updates, update}) {
+const Form = function({refresh}) {
   const st = window.state;
   const [popup, togglePopup] = useState(false);
 
@@ -144,7 +144,8 @@ const Form = function({updates, update}) {
     document.cookie = `Queries=${JSON.stringify(saved)}`;
 
     st.saveQuery(saved);
-    update(!updates);
+
+    refresh();
     togglePopup(!popup);
   };
 

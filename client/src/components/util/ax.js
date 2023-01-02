@@ -114,7 +114,7 @@ var ax = {
     }
 
     var sort = {
-      [st.sortBy]: document.getElementById('order').value
+      [st.sort]: document.getElementById('order').value
     };
 
     axios.get(urlBase + 'tickers', {params: {filter, sort}})
