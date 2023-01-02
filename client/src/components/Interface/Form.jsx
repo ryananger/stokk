@@ -152,10 +152,12 @@ const Form = function() {
       return;
     }
 
-    var value = document.querySelector('#saveQuery').value;
+    var name = document.querySelector('#saveQuery').value;
     var saved = st.savedQueries;
 
-    saved.unshift({name: value, filter: filter});
+    saved[name] = filter;
+
+    document.cookie = `Queries=${JSON.stringify(saved)}`;
 
     st.saveQuery(saved);
     togglePopup(!popup);
@@ -187,8 +189,8 @@ const Form = function() {
     <div id='formContainer'>
       <form id='form' onSubmit={handleSubmit} autoComplete='off'>
         <div className='closeButton v' onClick={clearForm}><div className='ex'>x</div></div>
-        <div className='plusButton v'>
-          <div className='plus' onClick={()=>{togglePopup(!popup)}}>+</div>
+        <div className='plusButton v' onClick={()=>{togglePopup(!popup)}}>
+          <div className='plus'>+</div>
         </div>
         {renderForm()}
         <input type='submit' value='Search'/>

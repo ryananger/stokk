@@ -1,5 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import App from './App.jsx';
+import helpers from './util/helpers.js';
+
+const cookie  = helpers.parseCookie(document.cookie);
+const queries = cookie.Queries ? JSON.parse(cookie.Queries) : {};
+const lists   = cookie.Lists ? JSON.parse(cookie.Lists) : {};
 
 const State = function() {
   // App
@@ -8,8 +13,8 @@ const State = function() {
   // Interface
   const [sort, setSort]           = useState('date');
   const [infoView, setInfo]       = useState('default');
-  const [savedQueries, saveQuery] = useState([]);
-  const [savedLists, saveList]    = useState([]);
+  const [savedQueries, saveQuery] = useState(queries);
+  const [savedLists, saveList]    = useState(lists);
   // Brain
   const [predictions, setPredictions] = useState([]);
 
@@ -33,6 +38,8 @@ const State = function() {
   };
 
   window.state = state;
+
+  useEffect(()=>{}, [state]);
 
   return (
     <App/>

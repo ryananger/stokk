@@ -139,7 +139,7 @@ var ax = {
   getNet: function(set) {
     axios.get(urlBase + 'net')
       .then(function(response) {
-        console.clear();
+        //console.clear();
         if (typeof response.data === 'string') {
           console.log(response.data);
           return;

@@ -20,6 +20,9 @@
 .infoContainer {
   padding: 4px;
   padding-left: 8px;
+  height: 146px;
+  justify-content: flex-start;
+  overflow: overlay;
 }
 
 .searchInfo {

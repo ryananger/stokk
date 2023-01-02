@@ -7,12 +7,28 @@ var helpers = {
     return Math.trunc(num*100)/100;
   },
 
+  parseCookie: function() {
+    if (!document.cookie) {
+      return;
+    }
+
+    var split = document.cookie.replaceAll(' ', '').split(';');
+    var cookie = {};
+
+    split.map(function(entry) {
+      var keyValue = entry.split('=');
+
+      cookie[keyValue[0]] = keyValue[1];
+    })
+
+    return cookie;
+  },
   getDateFromCookie: function() {
     var date;
 
     if (!document.cookie) {
       //document.cookie = 'date=2021-01-01';
-      document.cookie = 'date=2022-12-20';
+      document.cookie = 'date=2022-12-30';
     }
 
     date = document.cookie.slice(5);
