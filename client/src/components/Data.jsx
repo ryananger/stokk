@@ -39,7 +39,7 @@ const Data = function({data}) {
       }
 
       rendered.push((
-        <div key={i} className={`entry ${tag} h`}>
+        <div key={i} className={`entryRow ${tag} h`}>
           <div className='entryKey'>{entry.ticker}</div>
           <div className='entryKey'>{entry.date}</div>
           <div className='entryKey'>{helpers.trunc(entry.open)}</div>

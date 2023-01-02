@@ -28,11 +28,7 @@ const Form = function() {
       })
     }
 
-    var cb = function() {
-      st.setQueried(queriedTickers);
-    };
-
-    ax.getTickers(filter, st.sort, st.setData, cb);
+    ax.getTickers(filter, queriedTickers);
   };
 
   var validateForm = function() {
@@ -110,18 +106,6 @@ const Form = function() {
         return;
       }
 
-      if (label === 'ticker') {
-        rendered.push(
-          <label key={label + 'Label'} className='tickerLabel'>
-            <div className='formTag'>{label}:</div>
-            <input type='radio' id={label + 'Radio'} checked={(st.sort === label)} onChange={sortChange}/>
-            <input type='text' id={label}/>
-          </label>
-        )
-
-        return;
-      }
-
       rendered.push(
         <label key={label + 'Label'}>
           <div className='formTag'>{label}:</div>
@@ -134,7 +118,7 @@ const Form = function() {
     rendered.push(date);
     rendered.push(
       <label key='order'>
-        <div className='formTag'>order:</div>
+        <div className='formTag'>sort:</div>
         <select id='order'>
           <option value={-1}>descending</option>
           <option value={1}>ascending</option>
@@ -181,6 +165,7 @@ const Form = function() {
     togglePopup(false);
     st.setData([]);
     st.setQueried([]);
+    st.setPredictions([]);
   };
 
   useEffect(()=>{}, [popup])

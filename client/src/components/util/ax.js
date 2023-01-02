@@ -105,7 +105,7 @@ var ax = {
 
     return true;
   },
-  getTickers: function(filter, sortBy, setData, cb) {
+  getTickers: function(filter, queriedTickers) {
     const st = window.state;
 
     if (Object.keys(filter).length === 0) {
@@ -114,7 +114,7 @@ var ax = {
     }
 
     var sort = {
-      [sortBy]: document.getElementById('order').value
+      [st.sortBy]: document.getElementById('order').value
     };
 
     axios.get(urlBase + 'tickers', {params: {filter, sort}})
@@ -132,8 +132,9 @@ var ax = {
           }
         })
 
-        cb();
-        setData(onlyValid);
+        st.setData(onlyValid);
+        st.setQueried(queriedTickers);
+        st.setPredictions([]);
       })
   },
   getNet: function(set) {
