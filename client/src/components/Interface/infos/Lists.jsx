@@ -1,17 +1,7 @@
 import React, {useEffect} from 'react';
 
-const Lists = function({list}) {
+const Lists = function({list, set}) {
   const st = window.state;
-  var set;
-
-  switch (list) {
-    case 'lists':
-      set = st.savedLists;
-      break;
-    case 'queries':
-      set = st.savedQueries;
-      break;
-  }
 
   var loadQuery = function(e) {
     var name = e.target.getAttribute('name');

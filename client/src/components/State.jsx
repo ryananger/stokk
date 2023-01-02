@@ -39,8 +39,6 @@ const State = function() {
 
   window.state = state;
 
-  useEffect(()=>{}, [state]);
-
   return (
     <App/>
   );

@@ -27,8 +27,8 @@ const Info = function({data}) {
           {dataInfo()}
         </div>
         ),
-      lists:   (<Lists list={'lists'}/>),
-      queries: (<Lists list={'queries'}/>),
+      lists:   (<Lists list={'lists'} set={st.savedLists}/>),
+      queries: (<Lists list={'queries'} set={st.savedQueries}/>),
       search:  (<Search/>)
     };
 
