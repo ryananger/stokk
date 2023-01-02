@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-import helpers from '../util/helpers.js';
 import Info    from './Info.jsx';
 import Form    from './Form.jsx';
 
-const labels = helpers.labels;
-
 const Interface = function({data}) {
   return (
-    <div className='interLeft v'>
+    <div className='interface v'>
       <Info data={data}/>
       <Form/>
     </div>

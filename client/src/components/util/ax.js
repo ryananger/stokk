@@ -17,7 +17,7 @@ var ax = {
 
     axios.get(helpers.getURL(dateString))
       .then(function(response) {
-        //ax.handleData(response.data, dateString);
+        ax.handleData(response.data, dateString);
 
         console.log('GET data for ', dateString, response.data.resultsCount);
         document.cookie = 'date=' + helpers.dateToString(newDate);

@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import ax      from '../util/ax.js';
-import helpers from '../util/helpers.js';
+import Lists      from './infos/Lists.jsx';
+import Search     from './infos/Search.jsx';
+import ax         from '../util/ax.js';
+import helpers    from '../util/helpers.js';
 
 const labels = helpers.labels;
 
@@ -25,34 +27,9 @@ const Info = function({data}) {
           {dataInfo()}
         </div>
         ),
-      lists: (
-        <div className='listInfo v'>
-          {renderSet('lists')}
-        </div>
-      ),
-      queries: (
-        <div className='queryInfo v'>
-          {renderSet('queries')}
-        </div>
-      ),
-      search: (
-        <div className='searchInfo v'>
-          Click the button to sort query by that parameter.
-          <br/><br/>
-          Format comparisons like this:
-          <br/><br/>
-          <label className='dummyLabel'>
-            <div className='formTag'>open:</div>
-            <input type='radio' id='dummy1' checked={0} readOnly/>
-            <input type='text' value='>3, <=4' readOnly/>
-          </label>
-          <label className='dummyLabel'>
-            <div className='formTag'>close:</div>
-            <input type='radio' id='dummy2'checked readOnly/>
-            <input type='text' value='>4' readOnly/>
-          </label>
-        </div>
-      )
+      lists:   (<Lists list={'lists'}/>),
+      queries: (<Lists list={'queries'}/>),
+      search:  (<Search/>)
     };
 
     if (st.infoView === 'search') {
@@ -86,34 +63,6 @@ const Info = function({data}) {
     } else {
       return `Found ${data.length} entries that meet the search criteria.`
     }
-  };
-
-  var renderSet = function(which) {
-    var set;
-
-    switch (which) {
-      case 'lists':
-        set = st.savedLists;
-        break;
-      case 'queries':
-        set = st.savedQueries;
-        break;
-    }
-
-    var rendered = [];
-    var onClick = function() {
-      load(which);
-    };
-
-    set.map(function(entry) {
-      rendered.push(<div key={entry.name} className='infoEntry'>{entry.name}</div>)
-    });
-
-    if (!rendered[0]) {
-      return `No ${which} available.`
-    }
-
-    return rendered;
   };
 
   return (

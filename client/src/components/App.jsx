@@ -19,7 +19,7 @@ const App = function() {
     <div id='app'>
       <Head/>
 
-      <div className='interface h'>
+      <div className='main h'>
         <Interface data={reversed}/>
         <Brain     data={reversed}/>
       </div>

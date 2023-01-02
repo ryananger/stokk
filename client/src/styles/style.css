@@ -59,14 +59,14 @@ h3 {
   justify-content: center;
 }
 
-.interface {
+.main {
   width: 100%;
   border: 1px solid rgb(104, 72, 112);
   border-style: none none solid none;
   margin-bottom: 32px;
 }
 
-.interLeft {
+.interface {
   margin: 32px;
   margin-left: 0;
   margin-right: 24px;

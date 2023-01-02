@@ -80,7 +80,8 @@ var testSet = function(net, set, sliceLength, forecastLength) {
   }
 
   return predicted;
-}
+};
+
 var useBrain = {
   dataConvert: dataConvert,
   dataSplit: dataSplit,

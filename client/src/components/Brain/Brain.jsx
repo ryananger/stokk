@@ -23,9 +23,11 @@ const options = {
 const Brain = function({data}) {
   const [netJSON, setNetJSON] = useState(null);
   const [loaded, netLoaded]   = useState(false);
-  const [predictions, setPredictions] = useState([]);
 
-  const queried = window.state.queried;
+  const st             = window.state;
+  const queried        = st.queried;
+  const predictions    = st.predictions;
+  const setPredictions = st.setPredictions;
 
   const datasets = function() {
     if (!queried[0]) {
@@ -57,8 +59,8 @@ const Brain = function({data}) {
     for (var ticker in datasets) {
       let set = datasets[ticker];
 
-      let predictions = br.testSet(net, set, 20, 5);
-      allPredictions = allPredictions.concat(predictions);
+      let predict = br.testSet(net, set, 20, 5);
+      allPredictions = allPredictions.concat(predict);
     }
 
     setPredictions(allPredictions);
@@ -98,7 +100,6 @@ const Brain = function({data}) {
 
   useEffect(loadNet, [netJSON]);
   useEffect(()=>{ax.getNet(setNetJSON)}, []);
-  useEffect(()=>{setPredictions([])}, [data]);
 
   return (
     <div className='visualContainer v'>
@@ -112,18 +113,3 @@ const Brain = function({data}) {
 };
 
 export default Brain;
-
-// var trainingData = [
-//   [1,  1, 1],
-//   [2, .9, 1],
-//   [3, .8, 2],
-//   [4, .7, 2],
-//   [5, .6, 2],
-//   [6, .5, 2],
-//   [7, .4, 3],
-//   [8, .3, 3],
-//   [9, .2, 3],
-//   [10,.1, 4],
-//   [11,.1, 4],
-//   [12,.1, 5]
-// ];
