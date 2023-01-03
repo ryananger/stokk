@@ -47,6 +47,22 @@ var helpers = {
 
     return str;
   },
+  smallDate: function(dateString) {
+    var getMonthName = function(monthNumber) {
+      var date = new Date();
+
+      date.setDate(1);
+      date.setMonth(monthNumber - 1);
+
+      return date.toLocaleString([], {month: 'long'}).slice(0, 3);
+    };
+
+    var date = new Date(dateString);
+    var month = getMonthName(date.getMonth() + 1);
+    var day = date.getDate() + 1;
+
+    return `${month} ${day}`;
+  },
   getTodayString: function() {
     var today = new Date();
     var current = {

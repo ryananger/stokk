@@ -1,56 +1,33 @@
 import React, {useState} from 'react';
 import helpers from './util/helpers.js';
+import Ticker from './Ticker.jsx';
 
 const labels = helpers.labels;
 
 const Data = function({data}) {
+  const st = window.state;
   const [page, setPage] = useState(0);
   const pages = helpers.getPages(data);
+  const tickers = function() {
+    let tickers = {};
 
-  var renderLabels = function() {
-    var rendered = [];
-
-    labels.map(function(label) {
-      if (label !== 'dateEnd')
-      rendered.push((
-        <div key={label} className='tableKey'>{label}</div>
-      ))
-    })
-
-    return (
-      <div>
-        <div className='keys h'>
-          {rendered}
-        </div>
-        <hr/>
-      </div>
-    )
-  };
-
-  var renderData = function() {
-    var rendered = [];
-
-    // TODO: this only shows page 0, no options to switch pages.
-    pages[page].map(function(entry, i) {
-      var tag = '';
-
-      if (i % 2 === 0) {
-        tag = 'alt'
+    data.map(function(entry) {
+      if (!tickers[entry.ticker]) {
+        tickers[entry.ticker] = [entry];
+      } else {
+        tickers[entry.ticker].push(entry);
       }
-
-      rendered.push((
-        <div key={i} className={`entryRow ${tag} h`}>
-          <div className='entryKey'>{entry.ticker}</div>
-          <div className='entryKey'>{entry.date}</div>
-          <div className='entryKey'>{helpers.trunc(entry.open)}</div>
-          <div className='entryKey'>{helpers.trunc(entry.close)}</div>
-          <div className='entryKey'>{helpers.trunc(entry.high)}</div>
-          <div className='entryKey'>{helpers.trunc(entry.low)}</div>
-          <div className='entryKey'>{Math.floor(entry.volume)}</div>
-          <div className='entryKey'>{helpers.trunc(entry.vwap)}</div>
-        </div>
-      ));
     })
+
+    return tickers;
+  }()
+
+  var renderTickers = function() {
+    var rendered = [];
+
+    for (var key in tickers) {
+      rendered.push(<Ticker key={key} ticker={key} data={tickers[key]}/>);
+    }
 
     return rendered;
   };
@@ -60,10 +37,9 @@ const Data = function({data}) {
   }
 
   return (
-    <div id='dataRender'>
-      {renderLabels()}
-      <div id='dataTable'>
-        {renderData()}
+    <div className='dataRender v'>
+      <div className='dataTable v'>
+        {renderTickers()}
       </div>
     </div>
   )

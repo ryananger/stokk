@@ -1,24 +1,63 @@
-#dataRender {
+.dataRender {
   width: 100%;
+  /* max-height: 90vh; */
 }
 
-#dataTable {
-  max-height: 92vh;
+.dataTable {
   overflow: overlay;
   overflow-x: hidden;
 }
 
-#dataTable::-webkit-scrollbar {
+.dataTable::-webkit-scrollbar {
   border: 1px solid rgb(104, 72, 112);
   width: 1vi;
 }
 
+.entryTicker {
+  color: rgb(181, 141, 190);
+  border: 1px solid rgb(104, 72, 112);
+  padding: 12px;
+  margin-top: 24px;
+}
+
+.entryTicker:hover {
+  border-color: rgb(181, 141, 190);
+  cursor: pointer;
+}
+
+.entryHead {
+
+}
+
+.tickerButtons {
+  margin-right: -4px;
+}
+
+.tickerButton {
+  width: 32px;
+  height: 32px;
+  align-items: center;
+}
+
+.tickerButton:hover {
+  color: rgb(230, 195, 130);
+}
+
+.entryScroll {
+  max-height: 38vh;
+  margin-top: 12px;
+  overflow: overlay;
+  overflow-x: hidden;
+  justify-content: flex-start;
+}
+
 .tableKey, .entryKey {
-  width: 10%;
+  min-width: 150px;
+  padding: 4px;
 }
 
 .entryRow, .keys {
-  width: 100%;
+  width: 96%;
   padding: 2px;
   padding-left: 12px;
 }
